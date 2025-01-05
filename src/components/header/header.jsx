@@ -17,24 +17,3 @@ function Header() {
 }
 
 export default Header;
-
-// export function HeaderStatic() {
-
-//   return (
-//     <header className="flex flex-row justify-between">
-//       <div>
-//         <a href="/" className="home-link">
-//           <Logo />
-//         </a>
-//       </div>
-//       <div className="signup">
-//         <a href="/signup">Sign up</a>
-//       </div>
-//       <div className="login">
-//         <a href="/login">Login</a>
-//       </div>
-//     </header>
-//   )
-// }
-
-/* <HeaderStatic /> */
