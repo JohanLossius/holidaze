@@ -9,7 +9,7 @@ function Navbar() {
     <nav className="navbar w-full">
       {urlPath.pathname === "/" /* && localStorage === "" */ ? (
         <ul className="flex flex-row justify-between items-center w-2/3 m-auto">
-          <li className="text-green-600 m-auto">
+          <li className="text-green-600 m-auto bg-secondary">
             <a href="/">Home</a>
           </li>
           <li className="text-green-600 m-auto">
