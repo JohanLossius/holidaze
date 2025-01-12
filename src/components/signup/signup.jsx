@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { signupApi, apiKey } from "../constants/api.js";
+import { profileLoginUsage } from "../constants/loginContext.jsx";
 
 const schema = yup
   .object({
@@ -36,6 +37,8 @@ const schema = yup
 function Signup() {
   const [submittedData, setSubmittedData] = useState(null);
   const [feedback, setFeedback] = useState(null);
+
+  const { loggedInState, logout } = profileLoginUsage();
   
   const {
     register,
@@ -108,24 +111,21 @@ function Signup() {
         throw new Error(json.errors[0].message);
       }
 
-      const token = json.data.accessToken;
-      const avatarUrl = json.data.avatar.url;
       const username = json.data.name;
       const email = json.data.email;
-      localStorage.setItem("username", username);
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("avatarUrl", avatarUrl);
-      localStorage.setItem("loggedIn", true);
+
+      // signup(username, email);
 
       if (resp.ok) {
         console.log("Console log: Login successful!");
         setFeedback(<div className="flex flex-col justify-center text-center mx-auto h-[15vh] text-green-500 font-bold">
                       <div className="">Your profile was successfully created!</div>
-                      <div className="">Username: {username}!</div>
-                      <div className="">Email: {email}!</div>
-                      <div className="">Get started here: <Link to="/venues" className="underline">Venues</Link></div>
+                      <div className="">Username: {username}</div>
+                      <div className="">Email: {email}</div>
+                      <div className="">Get started by logging in here: <Link to="/login" className="underline">Login</Link></div>
                     </div>);
         reset();
+
       }
     } catch (error) {
       console.log("Error: " + error.message);
@@ -184,105 +184,3 @@ function Signup() {
 };
 
 export default Signup;
-
-// function Signup() {
-//   const [submittedData, setSubmittedData] = useState(null);
-//   const [feedback, setFeedback] = useState(null);
-
-//   const {
-//     register,
-//     handleSubmit,
-//     formState:
-//       { errors },
-//       trigger,
-//       getValues,
-//       reset,
-//   } = useForm({
-//     resolver: yupResolver(schema),
-//   });
-
-// // Handle console logging, validation with yup and react form hook
-//   const handleBlur = async (field) => {
-
-//     // Trigger validation for the specified field when it loses focus
-//     const result = await trigger(field);
-
-//     if (result) {
-//       // Get the current values of the form fields
-//       const values = getValues();
-      
-//       if (
-//         !errors.firstName && !errors.firstName && !errors.email && !errors.password &&
-//         values.firstName && values.lastName && values.email && values.password
-//       ) {
-//         console.log("Validation succeeded, data:", values);
-//       }
-//     }
-//   };
-
-//   function onSubmitHandler(data) {
-//     console.log("onSubmit data:", data);
-//     setSubmittedData(data);
-//     reset();
-//   }
-
-//   return (
-//     <main className="h-[85vh] w-full m-auto">
-//       <section className="feedback-cont">
-//         {submittedData ? (
-//           <div className="flex flex-col h-[20vh] justify-center text-center p-4">
-//             <h2 className="success-message font-bold text-xl text-center">Your profile was successfully created!</h2>
-//             <div className="flex flex-col justify-between mx-auto text-center">
-//               <span className="span-contact">Username: <span className="submitted-data-span">{submittedData.firstName}_{submittedData.lastName}</span></span>
-//               <span className="span-contact">Email: <span className="submitted-data-span">{submittedData.email}</span></span>
-//               <span className="span-contact">Password: <span className="submitted-data-span">Don't worry mate. We ain't revealin' ya password to everybody!</span></span>
-//             </div>
-//             <p className="p-contact text-center">Get started here: <Link to="/venues" className="">Venues</Link>.</p>
-//           </div>
-//         ) : (
-//           <div className="flex flex-col h-[20vh] justify-center text-center p-4">
-//             <h2 className="text-center font-bold text-xl">Signup form</h2>
-//             <span className="span-contact text-center m-auto">Fill in the form below to send us a message.</span>
-//           </div>
-//         )}
-//       </section>
-//       <form className="flex flex-col m-auto justify-between text-center h-[55vh]" onSubmit={handleSubmit(onSubmitHandler)}>
-//         <label htmlFor="first-name-id">Your first name</label>
-//         <input
-//           {...register("firstName")}
-//           onBlur={() => handleBlur("firstName")}
-//           id="first-name-id"
-//           className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
-//         />
-//         <span className="text-red-500">{errors.firstName?.message}</span>
-//         <label htmlFor="last-name-id">Your last name</label>
-//         <input
-//           {...register("lastName")}
-//           onBlur={() => handleBlur("lastName")}
-//           id="last-name-id"
-//           className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
-//         />
-//         <span className="text-red-500">{errors.lastName?.message}</span>
-//         <label htmlFor="email-id">Your email</label>
-//         <input
-//           {...register("email")}
-//           onBlur={() => handleBlur("email")}
-//           id="email-id"
-//           className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
-//         />
-//         <span className="text-red-500">{errors.email?.message}</span>
-//         <label htmlFor="password-id">Your password</label>
-//         <input
-//           {...register("password")}
-//           onBlur={() => handleBlur("password")}
-//           id="password-id"
-//           className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
-//         />
-//         <span className="text-red-500">{errors.password?.message}</span>
-//         <button type="submit" className="bg-secondary p-2 rounded-[25px] w-32 mx-auto">Sign Up</button>  
-//       </form>
-//     </main>
-//   );
-// }
-
-// export default Signup;

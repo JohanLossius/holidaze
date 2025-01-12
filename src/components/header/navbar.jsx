@@ -1,13 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { profileLoginUsage } from "../constants/loginContext.jsx";
 
 function Navbar() {
   const urlPath = useLocation();
 
+  const { loggedInState, login, logout } = profileLoginUsage();
+
   return (
     <nav className="navbar w-full">
-      {urlPath.pathname === "/" /* && localStorage === "" */ ? (
+      {!loggedInState ? (
         <ul className="flex flex-row justify-between items-center w-2/3 m-auto">
           <li className="text-green-600 m-auto bg-secondary">
             <a href="/">Home</a>
@@ -42,7 +45,7 @@ function Navbar() {
             </NavLink>
           </li>
           <li className="text-green-600 m-auto">
-            <button className="logout-button secondary-button">Log Out</button>
+            <button onClick={() => logout() } className="bg-secondary p-2 rounded">Log Out</button>
           </li>
         </ul>
       )}

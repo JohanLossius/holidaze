@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { loginApi, apiKey } from "../constants/api.js";
+// import { localStorageSetItem } from "../constants/localStorage.jsx";
+import { profileLoginUsage } from "../constants/loginContext.jsx";
 
 const schema = yup
   .object({
@@ -23,6 +25,8 @@ const schema = yup
 function Login() {
   const [submittedData, setSubmittedData] = useState(null);
   const [feedback, setFeedback] = useState(null);
+
+  const { loggedInState, login, logout } = profileLoginUsage();
   
   const {
     register,
@@ -97,10 +101,8 @@ function Login() {
       const token = json.data.accessToken;
       const avatarUrl = json.data.avatar.url;
       const username = json.data.name;
-      localStorage.setItem("username", username);
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("avatarUrl", avatarUrl);
-      localStorage.setItem("loggedIn", true);
+
+      login(username, token, avatarUrl);
 
       if (resp.ok) {
         console.log("Console log: Login successful!");
@@ -109,9 +111,6 @@ function Login() {
                       <div className="m-2">Get started here: <Link to="/venues" className="underline">Venues</Link></div>
                     </div>);
         reset();
-
-        // For instant redirection upon successful login
-        // window.location.href = "/venues";
       }
 
     } catch (error) {
@@ -150,46 +149,5 @@ function Login() {
     </main>
   );
 };
-
-
-//     return (
-//       <main className="h-[85vh] w-full m-auto">
-//         <section className="feedback-cont">
-//           {submittedData ? (
-//             <div className="flex flex-col h-[21vh] justify-between text-center p-4">
-//               <h2 className="h-[7vh] success-message font-bold text-xl text-center">You were successfully logged in!</h2>
-//               <p className="h-[7vh] p-contact text-center">Logged in as {submittedData.email}</p>
-//               <p className="h-[7vh] p-contact text-center">Get started here: <Link to="/venues" className="underline">Venues</Link></p>
-//             </div>
-//           ) : (
-//             <div className="flex flex-col h-[20vh] justify-center text-center p-4">
-//               <h2 class="text-center font-bold text-xl">Login</h2>
-//               <span className="span-contact text-center m-auto">Fill in the form to log in.</span>
-//             </div>
-//           )}
-//         </section>
-//         <form class="flex flex-col m-auto justify-between text-center h-[55vh]" onSubmit={handleSubmit(onSubmitHandler)}>
-//           <label htmlFor="email-id">Your email</label>
-//           <input
-//             {...register("email")}
-//             onBlur={() => handleBlur("email")}
-//             id="email-id"
-//             className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
-//           />
-//           <span className="text-red-500">{errors.email?.message}</span>
-//           <label htmlFor="password-id">Your password</label>
-//           <input
-//             {...register("password")}
-//             onBlur={() => handleBlur("password")}
-//             id="password-id"
-//             className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
-//           />
-//           <span className="text-red-500">{errors.password?.message}</span>
-//           <button type="submit" className="bg-secondary p-2 rounded-[25px] w-32 mx-auto">Log In</button>  
-//         </form>
-//       </main>
-//     );
-//   };
-// };
 
 export default Login;

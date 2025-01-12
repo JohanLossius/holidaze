@@ -2,12 +2,15 @@ import React, { StrictMode } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import "./styles/index.css";
-import App from "./app.jsx";
+import App from "./App.jsx";
+import { ProfileLoginProvider } from "./components/constants/loginContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <ProfileLoginProvider>
+        <App />
+      </ProfileLoginProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
