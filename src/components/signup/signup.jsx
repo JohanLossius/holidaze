@@ -150,7 +150,7 @@ function Signup() {
           {...register("firstName")}
           onBlur={() => handleBlur("firstName")}
           id="first-name-id"
-          className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
         />
         <span className="text-red-500">{errors.firstName?.message}</span>
         <label htmlFor="last-name-id">Your last name</label>
@@ -158,7 +158,7 @@ function Signup() {
           {...register("lastName")}
           onBlur={() => handleBlur("lastName")}
           id="last-name-id"
-          className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
         />
         <span className="text-red-500">{errors.lastName?.message}</span>
         <label htmlFor="email-id">Your email</label>
@@ -166,7 +166,7 @@ function Signup() {
           {...register("email")}
           onBlur={() => handleBlur("email")}
           id="email-id"
-          className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
         />
         <span className="text-red-500">{errors.email?.message}</span>
         <label htmlFor="password-id">Your password</label>
@@ -174,10 +174,11 @@ function Signup() {
           {...register("password")}
           onBlur={() => handleBlur("password")}
           id="password-id"
-          className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
         />
         <span className="text-red-500">{errors.password?.message}</span>
-        <button type="submit" className="bg-secondary p-2 rounded-[25px] w-32 mx-auto">Sign Up</button>  
+        <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Sign Up</button>
+        <span>Already have an account? Log in here: <Link to="/login" className="underline">Login</Link></span> 
       </form>
     </main>
   );

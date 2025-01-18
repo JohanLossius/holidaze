@@ -6,10 +6,24 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        base: "1.1rem",
+      },
+      fontFamily: {
+        primary: ["Dosis", "sans-serif"],
+      },
       colors: {
-        secondary: "#F5F1F1",
+        primary: "#95002B",
+        secondary: "#FDA4B1",
+        tertiary: "#F5F1F1",
       }
     },
   },
   plugins: [],
 };
+
+
+// ujnused code
+
+// primary: ["Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"],
+// secondary: ["Arvo", "Times New Roman", "serif"],

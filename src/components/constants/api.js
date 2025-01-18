@@ -24,9 +24,10 @@ export const loginApi = `${apiBase}${loginEndpoint}`;
 
 // Profile, bookings and venues endpoints etc.
 
-export const profilesApi = `${holidazeApi}profiles`;
-export const bookingsApi = `${holidazeApi}bookings`;
-export const venuesApi = `${holidazeApi}venues`;
+export const profilesApi = `${holidazeApi}/profiles`;
+export const bookingsApi = `${holidazeApi}/bookings`;
+export const venuesApi = `${holidazeApi}/venues`;
+export const singleVenueApiBase = `${holidazeApi}/venues`
 
 export const searchQueryVenuesBase = `${venuesApi}/search?q=`;
 

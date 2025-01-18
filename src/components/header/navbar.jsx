@@ -12,40 +12,53 @@ function Navbar() {
     <nav className="navbar w-full">
       {!loggedInState ? (
         <ul className="flex flex-row justify-between items-center w-2/3 m-auto">
-          <li className="text-green-600 m-auto bg-secondary">
-            <a href="/">Home</a>
+          <li className="m-auto">
+            <NavLink to="/" className={({isActive}) => 
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+              Home
+            </NavLink>
           </li>
-          <li className="text-green-600 m-auto">
-            <a href="/signup">Sign up</a>
+          <li className="m-auto">
+            <NavLink to="/signup" className={({isActive}) => 
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+              Sign Up
+            </NavLink>
           </li>
-          <li className="text-green-600 m-auto">
-            <a href="/login">Login</a>
+          <li className="m-auto">
+            <NavLink to="/login" className={({isActive}) => 
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+              Login
+            </NavLink>
           </li>
         </ul>
         ) : (
         <ul className="text-rose-900 flex flex-row justify-between w-[80%] items-center m-auto">
-          <li className={urlPath.pathname === "/venues" ? "text-rose-600 m-auto" : "text-green-600 m-auto"}>
-            <NavLink to="/venues" className="nav-links">
+          <li className="m-auto">
+            <NavLink to="/venues" className={({isActive}) => 
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
               Venues
             </NavLink>
           </li>
-          <li className={urlPath.pathname === "/bookings" ? "text-rose-600 m-auto" : "text-green-600 m-auto"}>
-            <NavLink to="/bookings" className="nav-links">
+          <li className="m-auto">
+            <NavLink to="/bookings" className={({isActive}) => 
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
               Bookings
             </NavLink>
           </li>
-          <li className={urlPath.pathname === "/profile" ? "text-rose-600 m-auto" : "text-green-600 m-auto"}>
-            <NavLink to="/profile" className="nav-links">
+          <li className="m-auto">
+            <NavLink to="/profile" className={({isActive}) => 
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
               Profile
             </NavLink>
           </li>
-          <li className={urlPath.pathname === "/hosting" ? "text-rose-600 m-auto" : "text-green-600 m-auto"}>
-            <NavLink to="/hosting" className="nav-links">
+          <li className="m-auto">
+            <NavLink to="/hosting" className={({isActive}) => 
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
               Hosting
             </NavLink>
           </li>
-          <li className="text-green-600 m-auto">
-            <button onClick={() => logout() } className="bg-secondary p-2 rounded">Log Out</button>
+          <li className="m-auto">
+            <button onClick={() => logout() } className="text-secondary font-bold bg-tertiary rounded-[25px] p-4">Log Out</button>
           </li>
         </ul>
       )}

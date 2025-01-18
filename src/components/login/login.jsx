@@ -133,7 +133,7 @@ function Login() {
           {...register("email")}
           onBlur={() => handleBlur("email")}
           id="email-id"
-          className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
         />
         <span className="text-red-500">{errors.email?.message}</span>
         <label htmlFor="password-id">Your password</label>
@@ -141,10 +141,11 @@ function Login() {
           {...register("password")}
           onBlur={() => handleBlur("password")}
           id="password-id"
-          className="text-center bg-secondary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
         />
         <span className="text-red-500">{errors.password?.message}</span>
-        <button type="submit" className="bg-secondary p-2 rounded-[25px] w-32 mx-auto">Log In</button>  
+        <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Log In</button>
+        <span>Don't have an account? Sign up here: <Link to="/signup" className="underline">Signup</Link></span> 
       </form>
     </main>
   );

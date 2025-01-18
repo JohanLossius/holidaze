@@ -7,6 +7,7 @@ import Home from "./components/frontPage/home.jsx";
 import Signup from "./components/signup/signup.jsx";
 import Login from "./components/login/login.jsx";
 import Venues from "./components/venues/venues.jsx";
+import Venue from "./components/venues/venue.jsx";
 import Bookings from "./components/booking/bookings.jsx";
 import Profile from "./components/profile/profile.jsx";
 import Hosting from "./components/hosting/hosting.jsx";
@@ -34,6 +35,7 @@ function App() {
           <Route element={<Signup />} path="/signup" />
           <Route element={<Login />} path="/login" />
           <Route element={<Venues />} path="/venues" />
+          <Route element={<Venue />} path="/venue/:id" />
           <Route element={<Bookings />} path="/bookings" />
           <Route element={<Profile />} path="/profile" />
           <Route element={<Hosting />} path="/hosting" />
