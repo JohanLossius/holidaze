@@ -36,21 +36,6 @@ const schemaVenueManager = yup
 })
 .required();
 
-// const schema = yup
-//   .object({
-//     email: yup
-//       .string()
-//       .email("You must enter the email you registered with.")
-//       .required("Please enter the email address you registered with."),
-//     password: yup
-//       .string()
-//       .min(8, "Please enter your password, that should be of 8-100 characters.")
-//       .max(100, "Please enter your password, that should be of 8-100 characters.")
-//       .typeError("Please enter your password, that should be of 8-100 characters.")
-//       .required("Please enter your password, that should be of 8-100 characters."),
-//   })
-//   .required();
-
 function Profile() {
 
   const { avatarUrlState, setAvatarUrlState, bioState, setBioState, venueManagerState, setVenueManagerState } = profileLoginUsage();
@@ -65,34 +50,85 @@ function Profile() {
   const singleProfileApi = `${profilesApi}/${usernameConst}`;
 
   const {
-    register,
-    handleSubmit,
-    formState:
-      { errors },
-      trigger,
-      getValues,
-      reset,
+    register: registerAvatar,
+    handleSubmit: handleSubmitAvatar,
+    formState: { errors: avatarErrors },
+    trigger: triggerAvatar,
+    getValues: getValuesAvatar,
+    reset: resetAvatar,
     } = useForm({
-      resolver: yupResolver(schemaAvatar, schemaBio, schemaVenueManager),
+      resolver: yupResolver(schemaAvatar),
+  });
+
+  const {
+    register: registerBio,
+    handleSubmit: handleSubmitBio,
+    formState: { errors: bioErrors },
+    trigger: triggerBio,
+    getValues: getValuesBio,
+    reset: resetBio,
+    } = useForm({
+      resolver: yupResolver(schemaBio),
+  });
+
+  const {
+    register: registerVenueManager,
+    handleSubmit: handleSubmitVenueManager,
+    formState: { errors: venueManagerErrors },
+    trigger: triggerVenueManager,
+    getValues: getValuesVenueManager,
+    reset: resetVenueManager,
+    } = useForm({
+      resolver: yupResolver(schemaVenueManager),
   });
 
   // Handle console logging, validation with yup and react form hook
-  const handleBlur = async (field) => {
-
+  const handleBlurAvatar = async (field) => {
     // Trigger validation for the specified field when it loses focus
-    const result = await trigger(field);
-
-    console.log("result: ", result);
-
+    const result = await triggerAvatar(field);
+    console.log("result avatar: ", result);
     if (result) {
       // Get the current values of the form fields
-      const values = getValues();
-      
+      const values = getValuesAvatar();
       if (
-        !errors.avatar && values.avatar
+        !avatarErrors.avatar && values.avatar
         // !errors.avatar && !errors.bio && !errors.venueManager && values.avatar && values.bio && values.venueManager
       ) {
-        console.log("Validation succeeded, data:", values);
+        console.log("Avatar validation succeeded, data:", values);
+      }
+    }
+  };
+
+    // Handle console logging, validation with yup and react form hook
+    const handleBlurBio = async (field) => {
+      // Trigger validation for the specified field when it loses focus
+      const result = await triggerBio(field);
+      console.log("result bio: ", result);
+      if (result) {
+        // Get the current values of the form fields
+        const values = getValuesBio();
+        if (
+          !bioErrors.bio && values.bio
+          // !errors.avatar && !errors.bio && !errors.venueManager && values.avatar && values.bio && values.venueManager
+        ) {
+          console.log("Bio validation succeeded, data:", values);
+        }
+      }
+    };
+
+      // Handle console logging, validation with yup and react form hook
+  const handleBlurVenueManager = async (field) => {
+    // Trigger validation for the specified field when it loses focus
+    const result = await triggerVenueManager(field);
+    console.log("result venue manager: ", result);
+    if (result) {
+      // Get the current values of the form fields
+      const values = getValuesVenueManager();
+      if (
+        !venueManagerErrors.venueManager && values.venueManager
+        // !errors.avatar && !errors.bio && !errors.venueManager && values.avatar && values.bio && values.venueManager
+      ) {
+        console.log("Venue manager validation succeeded, data:", values);
       }
     }
   };
@@ -100,7 +136,7 @@ function Profile() {
   // avatarhandler form
 
   async function onSubmitHandlerAvatar(data) {
-    console.log("onSubmit data:", data);
+    console.log("avatar onSubmit data:", data);
     setSubmittedData(data);
 
     // setFeedback(null);
@@ -142,10 +178,10 @@ function Profile() {
         localStorage.setItem("avatar", avatarUrl);
 
         console.log("Console log: avatar update successful!");
-        setFeedback("Your profile was successfully updated!")
+        setFeedback("Your avatar was successfully updated!")
         setProfileErrorMessage(null);
 
-        reset();
+        resetAvatar();
       }
 
     } catch (error) {
@@ -165,7 +201,7 @@ function Profile() {
 
     const bioInput = data.bio;
 
-    const requestAvatarUpdate = {
+    const requestBioUpdate = {
       method: "PUT",
       body: JSON.stringify({
         bio: bioInput,
@@ -177,10 +213,10 @@ function Profile() {
       },
     };
 
-    console.log("requestAvatarUpdate: ", requestAvatarUpdate);
+    console.log("requestAvatarUpdate: ", requestBioUpdate);
         
     try {
-      const resp = await fetch(singleProfileApi, requestAvatarUpdate);
+      const resp = await fetch(singleProfileApi, requestBioUpdate);
       const json = await resp.json();
 
       console.log("Response: ", json);
@@ -195,11 +231,11 @@ function Profile() {
         const bioConst = json.data.bio;
         setBioState(bioConst);
 
-        console.log("Console log: avatar update successful!");
-        setFeedback("Your profile was successfully updated!")
+        console.log("Console log: Bio update successful!");
+        setFeedback("Your bio was successfully updated!")
         setProfileErrorMessage(null);
 
-        reset();
+        resetBio();
       }
 
     } catch (error) {
@@ -218,7 +254,7 @@ function Profile() {
     // setFeedback(null);
     const venueManagerInput = data.venueManager;
 
-    const requestAvatarUpdate = {
+    const requestVenueManagerUpdate = {
       method: "PUT",
       body: JSON.stringify({
         venueManager: venueManagerInput
@@ -230,10 +266,10 @@ function Profile() {
       },
     };
 
-    console.log("requestAvatarUpdate: ", requestAvatarUpdate);
+    console.log("requestAvatarUpdate: ", requestVenueManagerUpdate);
         
     try {
-      const resp = await fetch(singleProfileApi, requestAvatarUpdate);
+      const resp = await fetch(singleProfileApi, requestVenueManagerUpdate);
       const json = await resp.json();
 
       console.log("Response: ", json);
@@ -249,11 +285,11 @@ function Profile() {
 
         setVenueManagerState(venueManagerConst);
 
-        console.log("Console log: avatar update successful!");
-        setFeedback("Your profile was successfully updated!")
+        console.log("Console log: venue manager state update successful!");
+        setFeedback("You are now a Venue Manager!")
         setProfileErrorMessage(null);
 
-        reset();
+        resetVenueManager();
       }
 
     } catch (error) {
@@ -263,8 +299,118 @@ function Profile() {
     }
   }
 
+  useEffect(() => {
+    async function getProfile() {
+      try {
+        const response = await fetch(singleProfileApi, optionsApiKey);
+        const jsonObject = await response.json();
+        console.log("jsonObject: ", jsonObject);
+        // const venuesCont = JSON.stringify(data);
+        const profileCont = jsonObject.data;
+        console.log("profileCont ", profileCont);
 
-  // async function onSubmitHandler(data) {
+        if (!response.ok) {
+          throw new Error(jsonObject.errors[0]?.message || "An unknown error occured.");
+        }
+        if (response.ok) {
+          setProfile(profileCont);
+        }
+      } catch (error) {
+        console.log("Error: " + error.message);
+        setErrorMessage(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getProfile();
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="h-auto min-h-[85vh] text-center flex flex-col justify-between items-center w-full">
+        <h1 className="m-auto font-bold text-3xl">Profile</h1>
+        <section className="m-auto">Your profile is loading...</section>
+      </main>
+    )
+  }
+
+  if (errorMessage) {
+    return (
+      <main className="h-auto min-h-[85vh] text-center w-full m-auto flex flex-col">
+        <p className="mx-auto mt-auto mb-2">I'm sorry, darling, but an error has occured. Technically speaking:</p>
+        <p className="font-bold underline mx-auto mb-auto mt-2">{errorMessage}</p>
+      </main>
+    )
+  }
+
+  return (
+    <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
+      <h1 className="mx-auto font-bold text-3xl">Profile</h1>
+      { feedback ? <section className="mx-auto text-green-500 font-bold text-center">{feedback}</section> : null }
+      { profileErrorMessage ? <section className="mx-auto font-red-500 font-bold text-center">There was an error updating your profile: {profileErrorMessage}</section> : null }
+        { profile ? (
+          <section className="flex flex-col mx-auto justify-center justify-between m-4 gap-4">
+            {/* <img className="max-h-[25rem] max-w-[50rem] h-auto w-auto" src={profile.banner.url} alt={profile.banner?.alt || "Profile banner"}></img> */}
+            <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={avatarUrlState} alt={profile.avatar?.alt || "Profile picture"}></img>
+            <h2 className="text-2xl font-bold mx-auto">{profile.name}</h2>
+            <h3>{profile.email}</h3>
+            <p>Bio: {bioState}</p>
+            <form className="flex flex-row items-center m-auto justify-between text-center w-full" onSubmit={handleSubmitAvatar(onSubmitHandlerAvatar)}>
+              <label htmlFor="avatar-id">Update profile picture:</label>
+              <input
+                {...registerAvatar("avatar")}
+                onBlur={() => handleBlurAvatar("avatar")}
+                id="avatar-id"
+                className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+              />
+              <span className="text-red-500">{avatarErrors.avatar?.message}</span>
+              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
+            </form>
+            <form className="flex flex-row items-center m-auto justify-between text-center w-full" onSubmit={handleSubmitBio(onSubmitHandlerBio)}>
+              <label htmlFor="bio-id">Update bio:</label>
+              <input
+                {...registerBio("bio")}
+                onBlur={() => handleBlurBio("bio")}
+                id="bio-id"
+                className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+              />
+              <span className="text-red-500">{bioErrors.bio?.message}</span>
+              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
+            </form>
+            <form className="flex flex-row items-center m-auto justify-between text-center w-full" onSubmit={handleSubmitVenueManager(onSubmitHandlerVenueManager)}>
+              <label htmlFor="venueManager-id">Register as Venue Manager:</label>
+              <input
+                type="checkbox"
+                {...registerVenueManager("venueManager")}
+                onBlur={() => handleBlurVenueManager("venueManager")}
+                id="venueManager-id"
+                className="border-none rounded max-w-[5rem] max-h-[5rem] h-[3.5rem] w-[3.5rem] text-black bg-tertiary p-2 m-auto"
+              />
+              <span className="text-red-500">{venueManagerErrors.venueManager?.message}</span>
+              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
+            </form>
+            <p>Bookings: {profile._count.bookings}</p>
+            <div>
+              <span>{venueManagerState === true ? "Venue Manager: Yes" : "Venue Manager: No"}</span>
+            </div>
+            <p>Venues under management: {profile._count.venues}</p>
+          </section>
+        ) : (
+          <section className="flex flex-wrap justify-center justify-between m-4 gap-4"> 
+            <div>No profile data was found. Please ensure you are logged in: <Link className="underline" to="/login">Log in</Link></div>
+          </section>
+        )}
+        <div>
+          <img src=""></img>
+        </div>
+    </main>
+  );
+}
+
+export default Profile;
+
+// async function onSubmitHandler(data) {
   //   console.log("onSubmit data:", data);
   //   setSubmittedData(data);
 
@@ -328,114 +474,3 @@ function Profile() {
   //     // setFeedback(null); // duplicate
   //   }
   // }
-
-  useEffect(() => {
-    async function getProfile() {
-      try {
-        const response = await fetch(singleProfileApi, optionsApiKey);
-        const jsonObject = await response.json();
-        console.log("jsonObject: ", jsonObject);
-        // const venuesCont = JSON.stringify(data);
-        const profileCont = jsonObject.data;
-        console.log("profileCont ", profileCont);
-
-        if (!response.ok) {
-          throw new Error(jsonObject.errors[0]?.message || "An unknown error occured.");
-        }
-        if (response.ok) {
-          setProfile(profileCont);
-        }
-      } catch (error) {
-        console.log("Error: " + error.message);
-        setErrorMessage(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getProfile();
-  }, []);
-
-  if (loading) {
-    return (
-      <main className="h-auto min-h-[85vh] text-center flex flex-col justify-between items-center w-full">
-        <h1 className="m-auto font-bold text-3xl">Profile</h1>
-        <section className="m-auto">Your profile is loading...</section>
-      </main>
-    )
-  }
-
-  if (errorMessage) {
-    return (
-      <main className="h-auto min-h-[85vh] text-center w-full m-auto flex flex-col">
-        <p className="mx-auto mt-auto mb-2">I'm sorry, darling, but an error has occured. Technically speaking:</p>
-        <p className="font-bold underline mx-auto mb-auto mt-2">{errorMessage}</p>
-      </main>
-    )
-  }
-
-  return (
-    <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
-      <h1 className="mx-auto font-bold text-3xl">Profile</h1>
-      { feedback ? <section className="mx-auto text-green-500 font-bold text-center">{feedback}</section> : null }
-      { profileErrorMessage ? <section className="mx-auto font-red-500 font-bold text-center">There was an error updating your profile: {profileErrorMessage}</section> : null }
-        { profile ? (
-          <section className="flex flex-col mx-auto justify-center justify-between m-4 gap-4">
-            {/* <img className="max-h-[25rem] max-w-[50rem] h-auto w-auto" src={profile.banner.url} alt={profile.banner?.alt || "Profile banner"}></img> */}
-            <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={avatarUrlState} alt={profile.avatar?.alt || "Profile picture"}></img>
-            <h2 className="text-2xl font-bold mx-auto">{profile.name}</h2>
-            <h3>{profile.email}</h3>
-            <p>Bio: {bioState}</p>
-            <form className="flex flex-row m-auto justify-between text-center w-full" onSubmit={handleSubmit(onSubmitHandlerAvatar)}>
-              <label htmlFor="avatar-id">Update profile picture:</label>
-              <input
-                {...register("avatar")}
-                onBlur={() => handleBlur("avatar")}
-                id="avatar-id"
-                className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
-              />
-              <span className="text-red-500">{errors.avatar?.message}</span>
-              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
-            </form>
-            <form className="flex flex-row m-auto justify-between text-center w-full" onSubmit={handleSubmit(onSubmitHandlerBio)}>
-              <label htmlFor="bio-id">Update bio:</label>
-              <input
-                {...register("bio")}
-                onBlur={() => handleBlur("bio")}
-                id="bio-id"
-                className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
-              />
-              <span className="text-red-500">{errors.bio?.message}</span>
-              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
-            <form className="flex flex-row m-auto justify-between text-center w-full" onSubmit={handleSubmit(onSubmitHandlerVenueManager)}>
-            </form>
-              <label htmlFor="venueManager-id">Register as Venue Manager:</label>
-              <input
-                type="checkbox"
-                {...register("venueManager")}
-                onBlur={() => handleBlur("venueManager")}
-                id="venueManager-id"
-                className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
-              />
-              <span className="text-red-500">{errors.venueManager?.message}</span>
-              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
-            </form>
-            <p>Bookings: {profile._count.bookings}</p>
-            <div>
-              <span>{venueManagerState === true ? "Venue Manager: Yes" : "Venue Manager: No"}</span>
-            </div>
-            <p>Venues under management: {profile._count.venues}</p>
-          </section>
-        ) : (
-          <section className="flex flex-wrap justify-center justify-between m-4 gap-4"> 
-            <div>No profile data was found. Please ensure you are logged in: <Link className="underline" to="/login">Log in</Link></div>
-          </section>
-        )}
-        <div>
-          <img src=""></img>
-        </div>
-    </main>
-  );
-}
-
-export default Profile;
