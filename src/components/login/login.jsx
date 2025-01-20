@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { loginApi, apiKey } from "../constants/api.js";
 // import { localStorageSetItem } from "../constants/localStorage.jsx";
-import { profileLoginUsage } from "../constants/loginContext.jsx";
+import { profileLoginUsage } from "../constants/context.jsx";
 
 const schema = yup
   .object({
@@ -81,7 +81,6 @@ function Login() {
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
-        // "X-Noroff-API-Key": apiKey,
       },
     };
 

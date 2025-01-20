@@ -3,7 +3,7 @@ import { singleVenueApiBase } from "../constants/api";
 import { Link, useParams } from "react-router-dom";
 import singleVenueStates from "../constants/singleVenueStates.js";
 import { maxTwoDecimals } from "../constants/handlers.js";
-import { profileLoginUsage } from "../constants/loginContext.jsx";
+import { profileLoginUsage } from "../constants/context.jsx";
 
 function Venue() {
 

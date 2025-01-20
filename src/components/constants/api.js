@@ -1,16 +1,19 @@
-const apiBase = "https://v2.api.noroff.dev";
-const holidazeApiEndpoint = "/holidaze";
+import { usernameConst, token, avatarUrlConst } from "./localStorage.js";
 
 // This is the API key created for the Holidaze application
 export const apiKey = "50496220-e16e-46a0-a4c6-2152a2d567b2";
 
-// Example of usage for the API key:
-// const options = {
-//   headers: {
-//     "Authorization": `Bearer ${accessToken}`,
-//     "X-Noroff-API-Key": "50496220-e16e-46a0-a4c6-2152a2d567b2"
-//   }
-// };
+// Headers
+export const optionsApiKey = {
+  headers: {
+    "Authorization": `Bearer ${token}`,
+    "X-Noroff-API-Key": apiKey
+  }
+};
+
+// API base urls
+const apiBase = "https://v2.api.noroff.dev";
+const holidazeApiEndpoint = "/holidaze";
 
 export const holidazeApi = `${apiBase}${holidazeApiEndpoint}`;
 

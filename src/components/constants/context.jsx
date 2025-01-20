@@ -5,6 +5,9 @@ const ProfileLoginContext = createContext();
 
 export const ProfileLoginProvider = ({ children }) => {
   const [loggedInState, setLoggedInState] = useState(!!localStorage.getItem("loggedIn"));
+  const [avatarUrlState, setAvatarUrlState] = useState(localStorage.getItem("avatarUrl") || "/blank-profile-picture-png")
+  const [bioState, setBioState] = useState(localStorage.getItem("bioLocalStorage") || null )
+  const [venueManagerState, setVenueManagerState] = useState(localStorage.getItem("venueManagerLocalStorage") || false )
 
   const navigate = useNavigate();
 
@@ -35,10 +38,10 @@ export const ProfileLoginProvider = ({ children }) => {
       setLoggedInState(!!localStorage.getItem("loggedIn"));
     }
     window.addEventListener("storage", handleStorageChange);
-  });
+  }, []);
 
   return (
-    <ProfileLoginContext.Provider value={{ loggedInState, login, logout }}>
+    <ProfileLoginContext.Provider value={{ loggedInState, login, logout, avatarUrlState, setAvatarUrlState, bioState, setBioState, venueManagerState, setVenueManagerState }}>
       {children}
     </ProfileLoginContext.Provider>
   );

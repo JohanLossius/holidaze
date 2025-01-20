@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { profileLoginUsage } from "../constants/loginContext.jsx";
+import { profileLoginUsage } from "../constants/context.jsx";
 
 function Navbar() {
   const urlPath = useLocation();

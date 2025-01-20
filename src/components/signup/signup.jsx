@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { signupApi, apiKey } from "../constants/api.js";
-import { profileLoginUsage } from "../constants/loginContext.jsx";
+import { profileLoginUsage } from "../constants/context.jsx";
 
 const schema = yup
   .object({

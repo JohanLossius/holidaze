@@ -12,7 +12,7 @@ import Bookings from "./components/booking/bookings.jsx";
 import Profile from "./components/profile/profile.jsx";
 import Hosting from "./components/hosting/hosting.jsx";
 import RouteNotFound from "./components/validation/routeNotFound.jsx";
-import { ProfileLoginProvider } from "./components/constants/loginContext.jsx";
+import { ProfileLoginProvider } from "./components/constants/context.jsx";
 
 // The <Outlet> from react-router-dom displays any child routes, almost like
 // passing through "children" in a component

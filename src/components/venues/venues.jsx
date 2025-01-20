@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { venuesApi, apiKey } from "../constants/api";
+import { venuesApi } from "../constants/api";
 import { maxTwoDecimals } from "../constants/handlers";
 import { Link } from "react-router-dom";
 
@@ -60,11 +60,11 @@ function Venues() {
   return (
     <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
       <h1 className="m-auto font-bold text-3xl">Venues for hire!</h1>
-      <section className="flex flex-wrap justify-center justify-between mx-auto m-4 gap-4">
+      <section className="flex flex-wrap justify-center justify-between m-4 gap-4">
         {venues.length >= 1 ? (
           venues.map((venue) => (
             <Link to={`/venue/${venue.id}`} key={venue.id}>
-              <article className="flex flex-col justify-between gap-2 p-4 m-2 border-b border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+              <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
                 <img src={venue.media[0]?.url} className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
                 <h3 className="font-semibold text-2xl">{venue.name}</h3>
                 <p className="underline">{venue.location.city}, {venue.location.country}</p>
