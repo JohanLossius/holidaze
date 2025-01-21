@@ -5,9 +5,9 @@ const ProfileLoginContext = createContext();
 
 export const ProfileLoginProvider = ({ children }) => {
   const [loggedInState, setLoggedInState] = useState(!!localStorage.getItem("loggedIn"));
-  const [avatarUrlState, setAvatarUrlState] = useState(localStorage.getItem("avatarUrl") || "/blank-profile-picture-png")
-  const [bioState, setBioState] = useState(localStorage.getItem("bioLocalStorage") || null )
-  const [venueManagerState, setVenueManagerState] = useState(localStorage.getItem("venueManagerLocalStorage") || false )
+  const [avatarUrlState, setAvatarUrlState] = useState(null);
+  const [bioState, setBioState] = useState(null);
+  const [venueManagerState, setVenueManagerState] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,15 +21,19 @@ export const ProfileLoginProvider = ({ children }) => {
   const login = ( username, token, avatarUrl ) => {
     localStorage.setItem("username", username);
     localStorage.setItem("accessToken", token);
-    localStorage.setItem("avatarUrl", avatarUrl);
+    // localStorage.setItem("avatarUrl", avatarUrl);
     localStorage.setItem("loggedIn", true);
     setLoggedInState(true);
+    setAvatarUrlState(avatarUrl)
     navigate("/venues");
   }
 
   const logout = () => {
     localStorage.clear();
     setLoggedInState(false);
+    setAvatarUrlState(null);
+    setBioState(null);
+    setVenueManagerState(null);
     navigate("/");
   }
 

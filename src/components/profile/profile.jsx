@@ -31,7 +31,7 @@ const schemaBio = yup
 const schemaVenueManager = yup
 .object({
   venueManager: yup
-    .boolean().nullable()
+    .boolean()
     .required("Please mark whether you would like to be a Venue Manager."),
 })
 .required();
@@ -266,7 +266,7 @@ function Profile() {
       },
     };
 
-    console.log("requestAvatarUpdate: ", requestVenueManagerUpdate);
+    console.log("requestVenueManagerUpdate: ", requestVenueManagerUpdate);
         
     try {
       const resp = await fetch(singleProfileApi, requestVenueManagerUpdate);
@@ -286,7 +286,7 @@ function Profile() {
         setVenueManagerState(venueManagerConst);
 
         console.log("Console log: venue manager state update successful!");
-        setFeedback("You are now a Venue Manager!")
+        setFeedback("Venue Manager state updated!")
         setProfileErrorMessage(null);
 
         resetVenueManager();
@@ -313,6 +313,9 @@ function Profile() {
           throw new Error(jsonObject.errors[0]?.message || "An unknown error occured.");
         }
         if (response.ok) {
+          setVenueManagerState(profileCont.venueManager);
+          setAvatarUrlState(profileCont.avatar.url);
+          setBioState(profileCont.bio);
           setProfile(profileCont);
         }
       } catch (error) {
@@ -352,7 +355,7 @@ function Profile() {
         { profile ? (
           <section className="flex flex-col mx-auto justify-center justify-between m-4 gap-4">
             {/* <img className="max-h-[25rem] max-w-[50rem] h-auto w-auto" src={profile.banner.url} alt={profile.banner?.alt || "Profile banner"}></img> */}
-            <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={avatarUrlState} alt={profile.avatar?.alt || "Profile picture"}></img>
+            <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={avatarUrlState || "/blank-profile-picture.png"} alt="Profile picture"></img>
             <h2 className="text-2xl font-bold mx-auto">{profile.name}</h2>
             <h3>{profile.email}</h3>
             <p>Bio: {bioState}</p>
@@ -376,7 +379,7 @@ function Profile() {
                 className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
               />
               <span className="text-red-500">{bioErrors.bio?.message}</span>
-              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
+              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Bio</button>
             </form>
             <form className="flex flex-row items-center m-auto justify-between text-center w-full" onSubmit={handleSubmitVenueManager(onSubmitHandlerVenueManager)}>
               <label htmlFor="venueManager-id">Register as Venue Manager:</label>
@@ -386,9 +389,10 @@ function Profile() {
                 onBlur={() => handleBlurVenueManager("venueManager")}
                 id="venueManager-id"
                 className="border-none rounded max-w-[5rem] max-h-[5rem] h-[3.5rem] w-[3.5rem] text-black bg-tertiary p-2 m-auto"
+                defaultChecked={venueManagerState}
               />
               <span className="text-red-500">{venueManagerErrors.venueManager?.message}</span>
-              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Avatar</button>
+              <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Update Venue Manager state</button>
             </form>
             <p>Bookings: {profile._count.bookings}</p>
             <div>
@@ -409,68 +413,3 @@ function Profile() {
 }
 
 export default Profile;
-
-// async function onSubmitHandler(data) {
-  //   console.log("onSubmit data:", data);
-  //   setSubmittedData(data);
-
-  //   // setFeedback(null);
-
-  //   const avatarUrlInput = data.avatar;
-  //   const bioInput = data.bio;
-  //   const venueManagerInput = data.venueManager;
-
-  //   const requestAvatarUpdate = {
-  //     method: "PUT",
-  //     body: JSON.stringify({
-  //       avatar: {
-  //         url: avatarUrlInput,
-  //       },
-  //       bio: bioInput,
-  //       venueManager: venueManagerInput
-  //     }),
-  //     headers: {
-  //       "Content-type": "application/json; charset=UTF-8",
-  //       "Authorization": `Bearer ${token}`,
-  //       "X-Noroff-API-Key": apiKey
-  //     },
-  //   };
-
-  //   console.log("requestAvatarUpdate: ", requestAvatarUpdate);
-        
-  //   try {
-  //     const resp = await fetch(singleProfileApi, requestAvatarUpdate);
-  //     const json = await resp.json();
-
-  //     console.log("Response: ", json);
-
-  //     if (!resp.ok) {
-  //       setProfileErrorMessage(json.errors[0].message);
-  //       setFeedback(null);
-  //       throw new Error(json.errors[0].message);
-  //     }
-
-  //     if (resp.ok) {
-  //       const avatarUrl = json.data.avatar.url;
-  //       const bioConst = json.data.bio;
-  //       const venueManagerConst = json.data.venueManager;
-
-  //       setAvatarUrlState(avatarUrl);
-  //       localStorage.setItem("avatar", avatarUrl);
-
-  //       setBioState(bioConst);
-  //       setVenueManagerState(venueManagerConst);
-
-  //       console.log("Console log: avatar update successful!");
-  //       setFeedback("Your profile was successfully updated!")
-  //       setProfileErrorMessage(null);
-
-  //       reset();
-  //     }
-
-  //   } catch (error) {
-  //     console.log("Error: " + error.message);
-  //     // setProfileErrorMessage(error.message); // duplicate
-  //     // setFeedback(null); // duplicate
-  //   }
-  // }
