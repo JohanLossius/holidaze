@@ -62,7 +62,7 @@ function Home() {
   if (error) {
     return (
       <main className="h-auto min-h-[85vh] text-center w-full m-auto flex flex-col">
-        <p className="mx-auto mt-auto mb-2">I'm sorry, darling, but an error has occured. Technically speaking:</p>
+        <p className="mx-auto mt-auto mb-2">An error has occured. Technically speaking:</p>
         <p className="font-bold underline mx-auto mb-auto mt-2">{error}</p>
       </main>
     )
