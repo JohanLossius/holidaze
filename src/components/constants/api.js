@@ -48,7 +48,6 @@ export const loginApi = `${apiBase}${loginEndpoint}`;
 export const profilesApi = `${holidazeApi}/profiles`;
 export const bookingsApi = `${holidazeApi}/bookings`;
 export const venuesApi = `${holidazeApi}/venues`;
-export const bookingsByProfileApi = `${holidazeApi}/profiles/${usernameConst}/bookings?_customer=true&_venue=true`;
 
 export const searchQueryVenuesBase = `${venuesApi}/search?q=`;
 

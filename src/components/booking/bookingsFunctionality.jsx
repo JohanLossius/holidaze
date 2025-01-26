@@ -1,5 +1,5 @@
 import React from "react";
-import { bookingsByProfileApi, venuesApi } from "../constants/api.js";
+import { venuesApi, holidazeApi } from "../constants/api.js";
 import { useState, useEffect } from "react";
 import { apiKey } from "../constants/api.js";
 // import { profileLoginUsage } from "../constants/context.jsx";
@@ -19,6 +19,11 @@ function BookingsFunctionality() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("accessToken");
+
+  const bookingsByProfileApi = `${holidazeApi}/profiles/${username}/bookings?_customer=true&_venue=true`;
 
   // In case separate api call needs to be made to get the owner of the venue of the booking
   // const venueOwnerApi = `${venuesApi}/${id}?_owner=true`;
@@ -113,7 +118,7 @@ function BookingsFunctionality() {
                 <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto">View host profile</button>
               </div> */}
             </div>
-            <button classname="text-2xl rounded-lg bg-primary text-white p-2 font-bold max-w-[8rem] mx-auto">View venue</button>
+            <button className="text-2xl rounded-lg bg-primary text-white p-2 font-bold max-w-[8rem] mx-auto">View venue</button>
           </article>
         ))
       ) : (
