@@ -11,6 +11,24 @@ export const optionsApiKey = {
   }
 };
 
+export const deleteOptions = {
+  method: "DELETE",
+  headers: {
+    "Content-type": "application/json; charset=UTF-8",
+    "Authorization": `Bearer ${token}`,
+    "X-Noroff-API-Key": apiKey
+  }
+}
+
+export const bookingsByVenueOptions = {
+  method: "GET",
+  headers: {
+    "Content-type": "application/json; charset=UTF-8",
+    "Authorization": `Bearer ${token}`,
+    "X-Noroff-API-Key": apiKey
+  }
+}
+
 // API base urls
 const apiBase = "https://v2.api.noroff.dev";
 const holidazeApiEndpoint = "/holidaze";
@@ -30,7 +48,7 @@ export const loginApi = `${apiBase}${loginEndpoint}`;
 export const profilesApi = `${holidazeApi}/profiles`;
 export const bookingsApi = `${holidazeApi}/bookings`;
 export const venuesApi = `${holidazeApi}/venues`;
-export const singleVenueApiBase = `${holidazeApi}/venues`
+export const bookingsByProfileApi = `${holidazeApi}/profiles/${usernameConst}/bookings?_customer=true&_venue=true`;
 
 export const searchQueryVenuesBase = `${venuesApi}/search?q=`;
 

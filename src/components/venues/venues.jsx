@@ -39,6 +39,18 @@ function Venues() {
     getVenues();
   }, []);
 
+  // Handle search bar and query state
+  const [query, setQuery] = useState("");
+  const handleSearch = (event) => {
+    setQuery(event.target.value);
+  }
+
+  // Filter venues based on search query
+  // filteredVenues is also used to display search suggestions
+  const filteredVenues = venues.filter((venue) => {
+    return venue.name.toLowerCase().includes(query.toLowerCase());
+  });
+
   if (loading) {
     return (
       <main className="h-auto min-h-[85vh] text-center flex flex-col justify-between items-center w-full">
@@ -51,7 +63,7 @@ function Venues() {
   if (error) {
     return (
       <main className="h-auto min-h-[85vh] text-center w-full m-auto flex flex-col">
-        <p className="mx-auto mt-auto mb-2">I'm sorry, darling, but an error has occured. Technically speaking:</p>
+        <p className="mx-auto mt-auto mb-2">An error has manifested. Technically speaking:</p>
         <p className="font-bold underline mx-auto mb-auto mt-2">{error}</p>
       </main>
     )
@@ -60,25 +72,28 @@ function Venues() {
   return (
     <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
       <h1 className="m-auto font-bold text-3xl">Venues for hire!</h1>
+      <section id="search-section" className="w-1/2 mx-auto">
+        <form className="mx-auto">
+          <input type="search" placeholder="Search by venue title..." name="search" value={query} onChange={handleSearch} className="mx-auto font-bold text-center bg-tertiary w-1/2 min-h-[3.5rem] my-4 rounded-[25px]" />
+        </form>
+      </section>
       <section className="flex flex-wrap justify-center justify-between m-4 gap-4">
-        {venues.length >= 1 ? (
-          venues.map((venue) => (
-            <Link to={`/venue/${venue.id}`} key={venue.id}>
-              <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
-                <img src={venue.media[0]?.url} className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
-                <h3 className="font-semibold text-2xl">{venue.name}</h3>
-                <p className="underline">{venue.location.city}, {venue.location.country}</p>
-                <p className="underline">{maxTwoDecimals(venue.price)} NOK per day</p>
-                {venue.rating != 0 ? <p className="underline">{venue.rating}/5 stars</p> : null}
-                {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 100)}...</div> : null}
-                {venue.description.length >= 20 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 99)}</div> : null}
-                <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Discover</button>
-              </article>
-            </Link>
-          ))
-        ) : (
-          <p>Sorry cabron, no venues match your query.</p>
-        )}
+        {filteredVenues.length >= 1 ? (
+            filteredVenues.map((venue) => (
+              <Link to={`/venue/${venue.id}`} key={venue.id}>
+                <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+                  <img src={venue.media[0]?.url} className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
+                  <h3 className="font-semibold text-2xl">{venue.name}</h3>
+                  <p className="underline">{venue.location.city}, {venue.location.country}</p>
+                  <p className="underline">{maxTwoDecimals(venue.price)} NOK per day</p>
+                  {venue.rating != 0 ? <p className="underline">{venue.rating}/5 stars</p> : null}
+                  {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 100)}...</div> : null}
+                  {venue.description.length >= 20 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 99)}</div> : null}
+                  <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Discover</button>
+                </article>
+              </Link>
+            ))) : (<div>There are no results that match your search!</div>)
+          }
       </section>
     </main>
   );
@@ -89,3 +104,124 @@ export default Venues;
 // unused code
 
 {/* <p className="underline">{venue.location.address}, {venue.location.city}, {venue.location.country}</p> */}
+
+
+// unused code with search etc:
+
+
+// return (
+//   <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
+//     <h1 className="m-auto font-bold text-3xl">Venues for hire!</h1>
+//     <section id="search-section" className="w-1/2 mx-auto">
+//       <form className="mx-auto">
+//         <input type="search" placeholder="Search by venue title..." name="search" value={query} onChange={handleSearch} className="mx-auto font-bold text-center bg-tertiary w-1/2 min-h-[3.5rem] my-4 rounded-[25px]" />
+//         {/* Search suggestions functionality, displays if there are filtered venues that match user search query of atleast 2 characters. */}
+//         {/* <div className="mx-auto">
+//           {filteredVenues.length >= 1 && query.length >= 2 ? (
+//             <div className="">
+//               <h3 className="font-bold text-lg">Quick search results:</h3>
+//               {filteredVenues.map((venue) => (
+//                 <Link key={venue.id} to={`/venue/${venue.id}`} className="">
+//                   <div className="">
+//                     <span className="">{venue.title}</span>
+//                     <button className="">View</button>
+//                   </div>
+//                 </Link>
+//               ))}
+//             </div>
+//           ) : (null)}
+//         </div> */}
+//       </form>
+//       {/* <div className="">
+//         {filteredVenues.length >= 1 && query.length >= 2 ? (
+//           filteredVenues.map((venue) => (
+//             <article key={venue.id} className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+//               <h2 className="font-semibold text-2xl">{venue.name}</h2>
+//               <div className="flex flex-col text-center mx-auto justify-between">
+//                 <span>{venue.description}</span>
+//                 <span>Price: {maxTwoDecimals(venue.price)} NOK</span>
+//               </div>
+//               <img src={venue.media[0]?.url || "No image available."} alt="Venue image" className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded"/>
+//               <Link to={`/venue/${venue.id}`}>
+//                 <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Go to venue</button>
+//               </Link>
+//             </article>
+//           ))) : (<div>There are no results that match your search!</div>)
+//         }
+//       </div> */}
+//       {/* <div className="">
+//         {filteredVenues.length >= 1 && query.length >= 2 ? (
+//           filteredVenues.map((venue) => (
+//             <article key={venue.id} className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+//               <h2 className="font-semibold text-2xl">{venue.name}</h2>
+//               <div className="flex flex-col text-center mx-auto justify-between">
+//                 <span>{venue.description}</span>
+//                 <span>Price: {maxTwoDecimals(venue.price)} NOK</span>
+//               </div>
+//               <img src={venue.media[0]?.url || "No image available."} alt="Venue image" className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded"/>
+//               <Link to={`/venue/${venue.id}`}>
+//                 <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Go to venue</button>
+//               </Link>
+//             </article>
+//           ))) : (<div>There are no results that match your search!</div>)
+//         }
+//       </div> */}
+//     </section>
+//     <section className="flex flex-wrap justify-center justify-between m-4 gap-4">
+//       {filteredVenues.length >= 1 ? (
+//           filteredVenues.map((venue) => (
+//             <Link to={`/venue/${venue.id}`} key={venue.id}>
+//               <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+//                 <img src={venue.media[0]?.url} className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
+//                 <h3 className="font-semibold text-2xl">{venue.name}</h3>
+//                 <p className="underline">{venue.location.city}, {venue.location.country}</p>
+//                 <p className="underline">{maxTwoDecimals(venue.price)} NOK per day</p>
+//                 {venue.rating != 0 ? <p className="underline">{venue.rating}/5 stars</p> : null}
+//                 {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 100)}...</div> : null}
+//                 {venue.description.length >= 20 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 99)}</div> : null}
+//                 <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Discover</button>
+//               </article>
+//             </Link>
+//           ))) : (<div>There are no results that match your search!</div>)
+//         }
+//       {/* {venues.length >= 1 && query.length < 2 ? (
+//         venues.map((venue) => (
+//           <Link to={`/venue/${venue.id}`} key={venue.id}>
+//             <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+//               <img src={venue.media[0]?.url} className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
+//               <h3 className="font-semibold text-2xl">{venue.name}</h3>
+//               <p className="underline">{venue.location.city}, {venue.location.country}</p>
+//               <p className="underline">{maxTwoDecimals(venue.price)} NOK per day</p>
+//               {venue.rating != 0 ? <p className="underline">{venue.rating}/5 stars</p> : null}
+//               {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 100)}...</div> : null}
+//               {venue.description.length >= 20 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 99)}</div> : null}
+//               <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Discover</button>
+//             </article>
+//           </Link>
+//         ))
+//       ) : (
+//         <p>No venues to display!</p>
+//       )} */}
+//     </section>
+//     {/* <section className="flex flex-wrap justify-center justify-between m-4 gap-4">
+//       {venues.length >= 1 ? (
+//         venues.map((venue) => (
+//           <Link to={`/venue/${venue.id}`} key={venue.id}>
+//             <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+//               <img src={venue.media[0]?.url} className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
+//               <h3 className="font-semibold text-2xl">{venue.name}</h3>
+//               <p className="underline">{venue.location.city}, {venue.location.country}</p>
+//               <p className="underline">{maxTwoDecimals(venue.price)} NOK per day</p>
+//               {venue.rating != 0 ? <p className="underline">{venue.rating}/5 stars</p> : null}
+//               {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 100)}...</div> : null}
+//               {venue.description.length >= 20 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 99)}</div> : null}
+//               <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Discover</button>
+//             </article>
+//           </Link>
+//         ))
+//       ) : (
+//         <p>Sorry cabron, no venues match your query.</p>
+//       )}
+//     </section> */}
+//   </main>
+// );

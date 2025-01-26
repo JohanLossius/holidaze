@@ -8,6 +8,14 @@ export const ProfileLoginProvider = ({ children }) => {
   const [avatarUrlState, setAvatarUrlState] = useState(null);
   const [bioState, setBioState] = useState(null);
   const [venueManagerState, setVenueManagerState] = useState(false);
+  const [singleVenue, setSingleVenue] = useState(null);
+  const [venueManagerFeedback, setVenueManagerFeedback] = useState(null);
+  const [updateCounter, setUpdateCounter] = useState(0);
+  const [createVenueState, setCreateVenueState] = useState(false);
+  const [bookingsByVenue, setBookingsByVenue] = useState(false);
+  const [contextError, setContextError] = useState(false);
+  const [contextLoading, setContextLoading] = useState(false);
+  const [bookingFeedback, setBookingFeedback] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,6 +45,14 @@ export const ProfileLoginProvider = ({ children }) => {
     navigate("/");
   }
 
+  // const updateVenue = (venue) => {
+  //   setSingleVenue(venue);
+  // }
+
+  const updateManager = () => {
+    setUpdateCounter(updateCounter + 1);
+  }
+
   useEffect(() => {
     const handleStorageChange = () => {
       setLoggedInState(!!localStorage.getItem("loggedIn"));
@@ -45,7 +61,7 @@ export const ProfileLoginProvider = ({ children }) => {
   }, []);
 
   return (
-    <ProfileLoginContext.Provider value={{ loggedInState, login, logout, avatarUrlState, setAvatarUrlState, bioState, setBioState, venueManagerState, setVenueManagerState }}>
+    <ProfileLoginContext.Provider value={{ loggedInState, login, logout, avatarUrlState, setAvatarUrlState, bioState, setBioState, venueManagerState, setVenueManagerState, singleVenue, setSingleVenue, venueManagerFeedback, setVenueManagerFeedback, updateCounter, setUpdateCounter, updateManager, createVenueState, setCreateVenueState, bookingsByVenue, setBookingsByVenue, contextError, setContextError, contextLoading, setContextLoading, bookingFeedback, setBookingFeedback }}>
       {children}
     </ProfileLoginContext.Provider>
   );

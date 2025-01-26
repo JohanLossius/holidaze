@@ -341,7 +341,7 @@ function Profile() {
   if (errorMessage) {
     return (
       <main className="h-auto min-h-[85vh] text-center w-full m-auto flex flex-col">
-        <p className="mx-auto mt-auto mb-2">I'm sorry, darling, but an error has occured. Technically speaking:</p>
+        <p className="mx-auto mt-auto mb-2">An error has occured. Technically speaking:</p>
         <p className="font-bold underline mx-auto mb-auto mt-2">{errorMessage}</p>
       </main>
     )
@@ -349,7 +349,7 @@ function Profile() {
 
   return (
     <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
-      <h1 className="mx-auto font-bold text-3xl">Profile</h1>
+      <h1 className="mx-auto font-bold text-3xl">Profile test</h1>
       { feedback ? <section className="mx-auto text-green-500 font-bold text-center">{feedback}</section> : null }
       { profileErrorMessage ? <section className="mx-auto font-red-500 font-bold text-center">There was an error updating your profile: {profileErrorMessage}</section> : null }
         { profile ? (

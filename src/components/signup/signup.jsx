@@ -15,11 +15,11 @@ const schema = yup
       .typeError("Your first name must be 4-99 characters.")
       .required("Please enter your first name"),
     lastName: yup
-    .string()
-    .min(2, "Your last name must be 2 characters or more.")
-    .max(99, "Your last name must be less than 100 characters.")
-    .typeError("Your last name must be 2-99 characters.")
-    .required("Please enter your last name"),
+      .string()
+      .min(2, "Your last name must be 2 characters or more.")
+      .max(99, "Your last name must be less than 100 characters.")
+      .typeError("Your last name must be 2-99 characters.")
+      .required("Please enter your last name"),
     email: yup
       .string()
       .email("You must enter a valid email address.")

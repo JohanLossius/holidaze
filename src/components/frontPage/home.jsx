@@ -39,6 +39,17 @@ function Home() {
     getVenues();
   }, []);
 
+    // Handle search bar and query state
+    const [query, setQuery] = useState("");
+    const handleSearch = (event) => {
+      setQuery(event.target.value);
+    }
+  
+    // Filter venues based on search query
+    const filteredVenues = venues.filter((venue) => {
+      return venue.name.toLowerCase().includes(query.toLowerCase());
+    });
+
   if (loading) {
     return (
       <main className="h-auto min-h-[85vh] text-center flex flex-col justify-between items-center w-full">
@@ -60,9 +71,14 @@ function Home() {
   return (
     <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
       <h1 className="m-auto font-bold text-3xl">Venues for hire!</h1>
+      <section id="search-section" className="w-1/2 mx-auto">
+        <form className="mx-auto">
+          <input type="search" placeholder="Search by venue title..." name="search" value={query} onChange={handleSearch} className="mx-auto font-bold text-center bg-tertiary w-1/2 min-h-[3.5rem] my-4 rounded-[25px]" />
+        </form>
+      </section>
       <section className="flex flex-wrap justify-center justify-between m-4 gap-4">
-        {venues.length >= 1 ? (
-          venues.map((venue) => (
+        {filteredVenues.length >= 1 ? (
+          filteredVenues.map((venue) => (
             <Link to={`/venue/${venue.id}`} key={venue.id}>
               <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
                 <img src={venue.media[0]?.url} className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
@@ -77,7 +93,7 @@ function Home() {
             </Link>
           ))
         ) : (
-          <p>Sorry cabron, no venues match your query.</p>
+          <p>There are no venues that match your search!</p>
         )}
       </section>
     </main>

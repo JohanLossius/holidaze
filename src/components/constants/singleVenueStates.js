@@ -7,6 +7,7 @@ function singleVenueStates(url) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [maxVisitors, setMaxVisitors] = useState(100);
 
   useEffect(() => {
     async function fetchVenue() {
@@ -27,6 +28,7 @@ function singleVenueStates(url) {
         console.log("json.data: ", json.data)
 
         setVenue(json.data);
+        setMaxVisitors(json.data.maxGuests);
       } catch (error) {
         setIsError(true);
       } finally {
@@ -36,7 +38,7 @@ function singleVenueStates(url) {
     fetchVenue();
   }, [url]);
 
-  return { venue, isLoading, isError, errorMessage };
+  return { venue, isLoading, isError, errorMessage, maxVisitors };
 }
 
 export default singleVenueStates;

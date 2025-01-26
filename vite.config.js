@@ -14,5 +14,12 @@ export default defineConfig({
   },
   server: {
     open: true, // Automatically opens the browser on dev server start
+    hmr: {
+      overlay: false, // Disable the full-screen error overlay
+    },
+    watch: {
+      usePolling: true, // Enables polling to pick up file changes
+      interval: 100,    // Polling interval in milliseconds
+    },
   },
 })

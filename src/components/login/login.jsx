@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginApi, apiKey } from "../constants/api.js";
 // import { localStorageSetItem } from "../constants/localStorage.jsx";
 import { profileLoginUsage } from "../constants/context.jsx";
@@ -27,6 +27,9 @@ function Login() {
   const [feedback, setFeedback] = useState(null);
 
   const { loggedInState, login, logout } = profileLoginUsage();
+
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const {
     register,
@@ -104,6 +107,12 @@ function Login() {
       login(username, token, avatarUrl);
 
       if (resp.ok) {
+        const redirectToVenueBooking = location.state?.redirectToVenueBooking;
+
+        if(redirectToVenueBooking) {
+          navigate(redirectToVenueBooking);
+        }
+
         console.log("Console log: Login successful!");
         setFeedback(<div className="flex flex-col justify-center text-center mx-auto h-[10vh] text-green-500 font-bold">
                       <div className="m-2">You were successfully logged in as {username}!</div>
