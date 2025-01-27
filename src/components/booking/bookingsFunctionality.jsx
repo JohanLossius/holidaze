@@ -2,6 +2,7 @@ import React from "react";
 import { venuesApi, holidazeApi } from "../constants/api.js";
 import { useState, useEffect } from "react";
 import { apiKey } from "../constants/api.js";
+import { Link } from "react-router-dom";
 // import { profileLoginUsage } from "../constants/context.jsx";
 
 const usernameConst = localStorage.getItem("username");
@@ -90,25 +91,64 @@ function BookingsFunctionality() {
         bookings.map((booking) => (
           <article key={booking.id} className="mx-auto flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
             <div className="flex flex-row mx-auto">
-              <div className="mx-auto">
-                <h3 className="font-semibold text-2xl">{booking.venue.name}</h3>
+              <div className="mx-2 mt-2 text-center">
+                <h3 className="font-bold text-2xl">{booking.venue.name}</h3>
                 <img src={booking.venue.media[0]?.url} alt="Venue image" className="max-w-[25rem] h-auto w-auto rounded-lg max-h-[25rem] mx-auto rounded my-2"></img>
-                <p className="max-w-[25rem] h-auto w-auto rounded-lg max-h-[15rem] mx-auto rounded my-2">{booking.venue.description.slice(0, 300)}...</p>
-                <p className="">Venue ID: {booking.venue.id}</p>
+                { booking.venue.description.length > 300 ? <p className="max-w-[25rem] h-auto w-auto max-h-[15rem] mx-auto my-2">{booking.venue.description.slice(0, 300)}...</p> : <p className="max-w-[25rem] h-auto w-auto max-h-[15rem] mx-auto">{booking.venue.description}</p>}
+                {/* <p className="max-w-[25rem] h-auto w-auto rounded-lg max-h-[15rem] mx-auto rounded my-2">{booking.venue.description.slice(0, 300)}...</p> */}
+                <div>
+                  <p className="underline">Venue ID:</p>
+                  {<span className="font-bold"> {booking.venue.id}</span>}
+                </div>
               </div>
-              <div className="mx-auto">
-                <h3>{booking.dateFrom.slice(0, 10)} to {booking.dateTo.slice(0, 10)}</h3>
-                <p className="underline">Guests: {booking.guests}</p>
-                <p className="underline">Price: {booking.price}</p>
-                <p className="underline">Location: {booking.venue.location.address}, {booking.venue.location.zip} {booking.venue.location.city}, {booking.venue.location.country}</p>
-                <p className="underline">Wifi: {booking.venue.meta.wifi}</p>
-                <p className="underline">Parking: {booking.venue.meta.parking}</p>
-                <p className="underline">Breakfast: {booking.venue.meta.breakfast}</p>
-                <p className="underline">Pets: {booking.venue.meta.pets}</p>
-                <p className="underline">Max. guests allowed: {booking.venue.maxGuests}</p>
-                <p className="underline">Booking date: {booking.created.slice(0, 10)}</p>
-                <p className="underline">Last updated: {booking.updated.slice(0, 10)}</p>
-                <p className="underline">Booking ID: {booking.id}</p>
+              <div className="mx-2 text-left">
+                <h3 className="font-semibold text-xl my-4 mx-auto">{booking.dateFrom.slice(0, 10)} to {booking.dateTo.slice(0, 10)}</h3>
+                <div>
+                  <span className="underline">Guests:</span>
+                  {<span className="font-bold"> {booking.guests}</span>}
+                </div>
+                <div>
+                  <span className="underline">NOK per day:</span>
+                  {<span className="font-bold"> {booking.venue.price}</span>}
+                </div>
+                <div>
+                  <p className="underline">Location:</p>
+                  <p className="font-bold">{booking.venue.location.address},</p>
+                  <p className="font-bold">{booking.venue.location.zip} {booking.venue.location.city}</p>
+                  <p className="font-bold">{booking.venue.location.country}</p>
+                </div>
+                <div>
+                  <span className="underline">Wifi:</span>
+                  { booking.venue.meta.wifi ? <span className="font-bold"> Yes</span> : <span className="font-bold"> No</span> }
+                </div>
+                <div>
+                  <span className="underline">Parking:</span>
+                  { booking.venue.meta.parking ? <span className="font-bold"> Yes</span> : <span className="font-bold"> No</span> }
+                </div>
+                <div>
+                  <span className="underline">Breakfast:</span>
+                  { booking.venue.meta.breakfast ? <span className="font-bold"> Yes</span> : <span className="font-bold"> No</span> }
+                </div>
+                <div>
+                  <span className="underline">Pets:</span>
+                  { booking.venue.meta.pets ? <span className="font-bold"> Yes</span> : <span className="font-bold"> No</span> }
+                </div>
+                <div>
+                  <span className="underline">Max. guests allowed:</span>
+                  {<span className="font-bold"> {booking.venue.maxGuests}</span>}
+                </div>
+                <div>
+                  <span className="underline">Booking date:</span>
+                  {<span className="font-bold"> {booking.created.slice(0, 10)}</span>}
+                </div>
+                <div>
+                  <span className="underline">Last updated:</span>
+                  {<span className="font-bold"> {booking.updated.slice(0, 10)}</span>}
+                </div>
+                <div>
+                  <p className="underline">Booking ID:</p>
+                  {<span className="font-bold"> {booking.id}</span>}
+                </div>
               </div>
               {/* <div className="mx-auto">
                 <h3>{booking.venue.owner.name}</h3>
@@ -118,7 +158,9 @@ function BookingsFunctionality() {
                 <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto">View host profile</button>
               </div> */}
             </div>
-            <button className="text-2xl rounded-lg bg-primary text-white p-2 font-bold max-w-[8rem] mx-auto">View venue</button>
+            <Link to={`/venue/${booking.venue.id}`}>
+              <button className="text-2xl rounded-lg bg-primary text-white p-2 font-bold max-w-[8rem] mx-auto">View venue</button>
+            </Link>
           </article>
         ))
       ) : (

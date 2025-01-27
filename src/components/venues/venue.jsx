@@ -105,7 +105,7 @@ function Venue() {
       if (resp.ok) {
         console.log("Booking successful!");
         // setBookedDates(null);
-        setBookingFeedback(<div className="text-green-500 font-bold">Your reservation was successfully booked!</div>);
+        setBookingFeedback(<div className="text-green-500 font-bold">Your reservation at <span className="underline">{venue.name}</span> was successfully booked!</div>);
         // setFeedback(<div className="text-green-500 font-bold">Your reservation was successfully booked!</div>);
         window.scrollTo(0, 0);
         reset();
