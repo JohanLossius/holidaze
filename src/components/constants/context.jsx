@@ -29,10 +29,8 @@ export const ProfileLoginProvider = ({ children }) => {
   const login = ( username, token, avatarUrl ) => {
     localStorage.setItem("username", username);
     localStorage.setItem("accessToken", token);
-    // localStorage.setItem("avatarUrl", avatarUrl);
     localStorage.setItem("loggedIn", true);
     setLoggedInState(true);
-    setAvatarUrlState(avatarUrl)
     navigate("/venues");
   }
 
@@ -42,12 +40,9 @@ export const ProfileLoginProvider = ({ children }) => {
     setAvatarUrlState(null);
     setBioState(null);
     setVenueManagerState(null);
+    setBookingFeedback(null);
     navigate("/");
   }
-
-  // const updateVenue = (venue) => {
-  //   setSingleVenue(venue);
-  // }
 
   const updateManager = () => {
     setUpdateCounter(updateCounter + 1);
@@ -61,7 +56,7 @@ export const ProfileLoginProvider = ({ children }) => {
   }, []);
 
   return (
-    <ProfileLoginContext.Provider value={{ loggedInState, login, logout, avatarUrlState, setAvatarUrlState, bioState, setBioState, venueManagerState, setVenueManagerState, singleVenue, setSingleVenue, venueManagerFeedback, setVenueManagerFeedback, updateCounter, setUpdateCounter, updateManager, createVenueState, setCreateVenueState, bookingsByVenue, setBookingsByVenue, contextError, setContextError, contextLoading, setContextLoading, bookingFeedback, setBookingFeedback }}>
+    <ProfileLoginContext.Provider value={{ loggedInState, setLoggedInState, login, logout, avatarUrlState, setAvatarUrlState, bioState, setBioState, venueManagerState, setVenueManagerState, singleVenue, setSingleVenue, venueManagerFeedback, setVenueManagerFeedback, updateCounter, setUpdateCounter, updateManager, createVenueState, setCreateVenueState, bookingsByVenue, setBookingsByVenue, contextError, setContextError, contextLoading, setContextLoading, bookingFeedback, setBookingFeedback }}>
       {children}
     </ProfileLoginContext.Provider>
   );

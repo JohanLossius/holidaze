@@ -1,12 +1,11 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { profileLoginUsage } from "../constants/context.jsx";
 
 function Navbar() {
   const urlPath = useLocation();
 
-  const { loggedInState, login, logout } = profileLoginUsage();
+  const { loggedInState, logout } = profileLoginUsage();
 
   return (
     <nav className="navbar w-full">

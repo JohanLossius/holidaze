@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
-import { signupApi, apiKey } from "../constants/api.js";
-import { profileLoginUsage } from "../constants/context.jsx";
+import { signupApi } from "../constants/api.js";
+// import { signupApi, apiKey } from "../constants/api.js";
+// import { profileLoginUsage } from "../constants/context.jsx";
 
 const schema = yup
   .object({
@@ -35,10 +36,10 @@ const schema = yup
 
 
 function Signup() {
-  const [submittedData, setSubmittedData] = useState(null);
+  // const [submittedData, setSubmittedData] = useState(null);
   const [feedback, setFeedback] = useState(null);
 
-  const { loggedInState, logout } = profileLoginUsage();
+  // const { loggedInState, logout } = profileLoginUsage();
   
   const {
     register,
@@ -72,8 +73,6 @@ function Signup() {
   };
 
   async function onSubmitHandler(data) {
-    console.log("onSubmit data:", data);
-    setSubmittedData(data);
 
     localStorage.clear();
     setFeedback(null);
@@ -98,16 +97,12 @@ function Signup() {
       },
     };
 
-    console.log("RequestOptions: ", requestOptions);
-
     try {
       const resp = await fetch(signupApi, requestOptions);
       const json = await resp.json();
 
-      console.log("Response: ", json);
-
       if (!resp.ok) {
-        setFeedback(<div className="text-red-500 font-bold">{json.errors[0].message}</div>);
+        setFeedback(<div className="text-red-500 font-bold">{json.errors[0]?.message}</div>);
         throw new Error(json.errors[0].message);
       }
 
@@ -117,7 +112,6 @@ function Signup() {
       // signup(username, email);
 
       if (resp.ok) {
-        console.log("Console log: Login successful!");
         setFeedback(<div className="flex flex-col justify-center text-center mx-auto h-[15vh] text-green-500 font-bold">
                       <div className="">Your profile was successfully created!</div>
                       <div className="">Username: {username}</div>
@@ -129,7 +123,6 @@ function Signup() {
       }
     } catch (error) {
       console.log("Error: " + error.message);
-      // setFeedback(<div className="text-red-500 font-bold">{error.message}</div>);
     }
   };
 

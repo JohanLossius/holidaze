@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { venuesApi, apiKey } from "../constants/api";
 import { profileLoginUsage } from "../constants/context";
-import { token } from "../constants/localStorage";
+import { getToken } from "../constants/localStorage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -141,7 +141,9 @@ function UpdateVenue() {
   };
 
   async function onSubmitHandler(data) {
-    console.log("onSubmit data:", data);
+    // console.log("onSubmit data:", data);
+
+    const token = getToken();
 
     const updateVenueApi = `${venuesApi}/${singleVenue.id}`;
 
@@ -181,7 +183,7 @@ function UpdateVenue() {
       const resp = await fetch(updateVenueApi, optionsUpdateVenue)
       const json = await resp.json();
 
-      console.log("Response venue update: ", json);
+      // console.log("Response venue update: ", json);
 
       if (!resp.ok) {
         setFeedback(<div className="text-red-500 font-bold">{json.errors[0].message}</div>);
@@ -190,7 +192,7 @@ function UpdateVenue() {
 
       if (resp.ok) {
         const venueName = json.data.name;
-        console.log("venue update successful");
+        // console.log("venue update successful");
         setSingleVenue(null);
         setVenueManagerFeedback(`${venueName} was updated successfully!`);
         updateManager();

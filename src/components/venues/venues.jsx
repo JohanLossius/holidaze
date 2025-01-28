@@ -20,7 +20,7 @@ function Venues() {
         while (!lastPage) {
           const response = await fetch(`${venuesApi}?page=${currentPage}`);
           const jsonObject = await response.json();
-          console.log("jsonObject venues", jsonObject);
+          // console.log("jsonObject venues", jsonObject);
 
           if (!response.ok) {
             throw new Error(jsonObject.errors[0]?.message);
@@ -62,7 +62,7 @@ function Venues() {
   });
 
   // Logic to check for duplicate ids. Testinghouse venue has some duplicate ids.
-  console.log("filteredVenues id: ", filteredVenues.map((venue) => venue.id));
+  // console.log("filteredVenues id: ", filteredVenues.map((venue) => venue.id));
   const ids = filteredVenues.map((venue) => venue.id);
   const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
   if (duplicates.length > 0) {

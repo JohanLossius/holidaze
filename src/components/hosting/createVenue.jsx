@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { venuesApi, apiKey } from "../constants/api";
-import { token } from "../constants/localStorage";
+import { getToken } from "../constants/localStorage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { profileLoginUsage } from "../constants/context";
 
 const schema = yup
@@ -85,6 +85,8 @@ function CreateVenue() {
   const [feedback, setFeedback] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const token = getToken();
 
   const {
     register,

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { loginApi, apiKey } from "../constants/api.js";
-// import { localStorageSetItem } from "../constants/localStorage.jsx";
+import { loginApi } from "../constants/api.js";
 import { profileLoginUsage } from "../constants/context.jsx";
 
 const schema = yup
@@ -23,10 +22,10 @@ const schema = yup
   .required();
 
 function Login() {
-  const [submittedData, setSubmittedData] = useState(null);
+  // const [submittedData, setSubmittedData] = useState(null);
   const [feedback, setFeedback] = useState(null);
 
-  const { loggedInState, login, logout } = profileLoginUsage();
+  const { loggedInState, setLoggedInState, login, logout } = profileLoginUsage();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,8 +62,8 @@ function Login() {
   };
 
   async function onSubmitHandler(data) {
-    console.log("onSubmit data:", data);
-    setSubmittedData(data);
+    // console.log("onSubmit data:", data);
+    // setSubmittedData(data);
 
     // event.preventDefault();
   
@@ -87,33 +86,42 @@ function Login() {
       },
     };
 
-    console.log("RequestOptions: ", requestOptions);
+    // console.log("RequestOptions: ", requestOptions);
         
     try {
       const resp = await fetch(loginApi, requestOptions);
       const json = await resp.json();
 
-      console.log("Response: ", json);
+      // console.log("Response: ", json);
 
-      if (!resp.ok) {
-        setFeedback(<div className="text-red-500 font-bold">{json.errors[0].message}</div>);
+     if (!resp.ok) {
+        setFeedback(<div className="text-red-500 font-bold">{json.errors[0]?.message}</div>);
         throw new Error(json.errors[0].message);
       }
 
-      const token = json.data.accessToken;
-      const avatarUrl = json.data.avatar.url;
-      const username = json.data.name;
-
-      login(username, token, avatarUrl);
-
       if (resp.ok) {
+
+        const token = json.data.accessToken;
+        const avatarUrl = json.data.avatar.url;
+        const username = json.data.name;
+  
+        // login(username, token, avatarUrl);
+        // console.log("Current token in localStorage:", localStorage.getItem("accessToken"));
+        // console.log("New token being added:", token);   
+        localStorage.setItem("username", username);
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("avatarUrl", avatarUrl);
+        localStorage.setItem("loggedIn", true);
+        setLoggedInState(true);
+        
         const redirectToVenueBooking = location.state?.redirectToVenueBooking;
 
         if(redirectToVenueBooking) {
           navigate(redirectToVenueBooking);
         }
 
-        console.log("Console log: Login successful!");
+        navigate("/venues");
+
         setFeedback(<div className="flex flex-col justify-center text-center mx-auto h-[10vh] text-green-500 font-bold">
                       <div className="m-2">You were successfully logged in as {username}!</div>
                       <div className="m-2">Get started here: <Link to="/venues" className="underline">Venues</Link></div>

@@ -1,5 +1,4 @@
-const usernameConst = localStorage.getItem("username");
-const token = localStorage.getItem("accessToken");
-const avatarUrlConst = localStorage.getItem("avatarUrl");
+export const getUsername = () => localStorage.getItem("username");
 
-export { usernameConst, token, avatarUrlConst };
+export const getToken = () => localStorage.getItem("accessToken");
+// const avatarUrlConst = localStorage.getItem("avatarUrl");

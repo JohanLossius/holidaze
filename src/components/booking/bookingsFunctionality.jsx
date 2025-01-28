@@ -1,28 +1,25 @@
 import React from "react";
-import { venuesApi, holidazeApi } from "../constants/api.js";
+import { holidazeApi, apiKey } from "../constants/api.js";
+import { getToken, getUsername } from "../constants/localStorage.js";
 import { useState, useEffect } from "react";
-import { apiKey } from "../constants/api.js";
 import { Link } from "react-router-dom";
 // import { profileLoginUsage } from "../constants/context.jsx";
-
-const usernameConst = localStorage.getItem("username");
-const token = localStorage.getItem("accessToken");
 
 // const bookingsByProfile = `${profilesApi}/${usernameConst}/bookings`;
 
 function BookingsFunctionality() {
 
-  const [reservations, setReservations] = useState([]);
-  const [blockedDates, setBlockedDates] = useState([]);
-  const [start, setStart] = useState(null);
-  const [end, setEnd] = useState(null);
+  // const [reservations, setReservations] = useState([]);
+  // const [blockedDates, setBlockedDates] = useState([]);
+  // const [start, setStart] = useState(null);
+  // const [end, setEnd] = useState(null);
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const username = localStorage.getItem("username");
-  const token = localStorage.getItem("accessToken");
+  const username = getUsername();
+  const token = getToken();
 
   const bookingsByProfileApi = `${holidazeApi}/profiles/${username}/bookings?_customer=true&_venue=true`;
 
@@ -44,10 +41,10 @@ function BookingsFunctionality() {
       try {
         const response = await fetch(bookingsByProfileApi, bookingsByProfileOptions);
         const jsonObject = await response.json();
-        console.log("jsonObject bookings json: ", jsonObject);
+        // console.log("jsonObject bookings json: ", jsonObject);
         // const venuesCont = JSON.stringify(data);
         const bookingsCont = jsonObject.data;
-        console.log("dataCont bookings ", bookingsCont);
+        // console.log("dataCont bookings ", bookingsCont);
 
         if (!response.ok) {
           throw new Error(jsonObject.errors[0].message);
@@ -56,7 +53,7 @@ function BookingsFunctionality() {
           setBookings(bookingsCont);
         }
       } catch (error) {
-        console.log("Error bookings: " + error.message);
+        // console.log("Error bookings: " + error.message);
         setError(error.message);
         // setFeedback(<div className="text-red-500 font-bold">{error.message}</div>);
       } finally {
@@ -92,8 +89,8 @@ function BookingsFunctionality() {
           <article key={booking.id} className="mx-auto flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
             <div className="flex flex-row mx-auto">
               <div className="mx-2 mt-2 text-center">
-                <h3 className="font-bold text-2xl">{booking.venue.name}</h3>
                 <img src={booking.venue.media[0]?.url} alt="Venue image" className="max-w-[25rem] h-auto w-auto rounded-lg max-h-[25rem] mx-auto rounded my-2"></img>
+                <h3 className="font-bold text-2xl">{booking.venue.name}</h3>
                 { booking.venue.description.length > 300 ? <p className="max-w-[25rem] h-auto w-auto max-h-[15rem] mx-auto my-2">{booking.venue.description.slice(0, 300)}...</p> : <p className="max-w-[25rem] h-auto w-auto max-h-[15rem] mx-auto">{booking.venue.description}</p>}
                 {/* <p className="max-w-[25rem] h-auto w-auto rounded-lg max-h-[15rem] mx-auto rounded my-2">{booking.venue.description.slice(0, 300)}...</p> */}
                 <div>

@@ -1,33 +1,5 @@
-import { usernameConst, token, avatarUrlConst } from "./localStorage.js";
-
 // This is the API key created for the Holidaze application
 export const apiKey = "50496220-e16e-46a0-a4c6-2152a2d567b2";
-
-// Headers
-export const optionsApiKey = {
-  headers: {
-    "Authorization": `Bearer ${token}`,
-    "X-Noroff-API-Key": apiKey
-  }
-};
-
-export const deleteOptions = {
-  method: "DELETE",
-  headers: {
-    "Content-type": "application/json; charset=UTF-8",
-    "Authorization": `Bearer ${token}`,
-    "X-Noroff-API-Key": apiKey
-  }
-}
-
-export const bookingsByVenueOptions = {
-  method: "GET",
-  headers: {
-    "Content-type": "application/json; charset=UTF-8",
-    "Authorization": `Bearer ${token}`,
-    "X-Noroff-API-Key": apiKey
-  }
-}
 
 // API base urls
 const apiBase = "https://v2.api.noroff.dev";
@@ -62,3 +34,30 @@ export const searchQueryProfilesBase = `${profilesApi}/search?q=`;
 `${profilesApi}/search?q=Bardur`; 
 "Bardur" is the search query, and changed dynamically.
 */
+
+
+// Headers
+// export const optionsApiKey = {
+//   headers: {
+//     "Authorization": `Bearer ${token}`,
+//     "X-Noroff-API-Key": apiKey
+//   }
+// };
+
+// export const deleteOptions = {
+//   method: "DELETE",
+//   headers: {
+//     "Content-type": "application/json; charset=UTF-8",
+//     "Authorization": `Bearer ${token}`,
+//     "X-Noroff-API-Key": apiKey
+//   }
+// }
+
+// export const bookingsByVenueOptions = {
+//   method: "GET",
+//   headers: {
+//     "Content-type": "application/json; charset=UTF-8",
+//     "Authorization": `Bearer ${token}`,
+//     "X-Noroff-API-Key": apiKey
+//   }
+// }

@@ -1,40 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { venuesApi, bookingsByVenueOptions } from "../constants/api";
+import React from "react";
 import { profileLoginUsage } from "../constants/context";
 
 function ViewBookingsByVenue() {
 
   const { bookingsByVenue, setBookingsByVenue, contextLoading, setContextLoading, contextError, setContextError } = profileLoginUsage();
-  
-  // useEffect(() => (
-  //   async function bookingsByVenueCall() {
-  //     try {
-  //       console.log("singleVenueBookings from bookings by venue call: ", singleVenueBookings);
-  //       setLoading(true);
-  //       const venueId = singleVenueBookings.id;
-  //       const bookingsByVenueApi = `${venuesApi}/${venueId}?_bookings=true`;
-  //       const response = await fetch(bookingsByVenueApi, bookingsByVenueOptions);
-  //       const json = await response.json();
-  //       console.log("bookings by venoe call json: ", json)
-
-  //       if (!response.ok) {
-  //         setError(json.errors[0]?.message || "Unknown error.")
-  //         setLoading(false);
-  //         throw new Error("An error occured.")
-  //       }
-
-  //       if (response.ok) {
-  //         console.log("bookings by venue success: ", json.data)
-  //         setBookingsByVenue(json.data);
-  //         setError(null);
-  //         setLoading(false);
-  //       }
-  //     }
-  //     catch (error) {
-  //       console.log("error message bookings by venue: ", error.message);
-  //     }
-  //   }), [singleVenueBookings]
-  // )
 
   if (contextLoading) {
     return (
@@ -58,26 +27,26 @@ function ViewBookingsByVenue() {
 
   if (bookingsByVenue) {
     return (
-      <section id="view-bookings-section" className="text-center mx-auto text-center mt-4 flex flex-col items-center border-2 bg-tertiary border-secondary w-4/5 rounded-[25px]">
+      <section id="view-bookings-section" className="text-center mx-auto text-center my-4 flex flex-col items-center border-2 bg-tertiary border-secondary w-4/5 rounded-[25px]">
         <h2 className="text-center mx-auto font-bold text-2xl">Bookings {bookingsByVenue?.name}</h2>
-        <section>
+        <section className="w-4/5">
         {bookingsByVenue?.bookings?.length >= 1 ? (
           bookingsByVenue.bookings.map((booking) => (
-            <div key={booking.id}>
-              <div className="flex flex-col mx-auto text-center">
-                <img src={booking.customer.avatar?.url} alt="Profile picture"></img>
-                <p>{booking.customer.name}</p>
-                <p>{booking.customer.email}</p>
-                <p>{booking.customer.bio?.slice(0, 50)}</p>
-              </div>
-              <div>
+            <article key={booking.id} className="flex flex-col justify-between bg-white border-2 rounded-[25px] m-2 p-2 w-full text-center">
+              <div className="flex flex-col text-center">
                 <span className="font-bold">From {booking.dateFrom.slice(0, 10)} to {booking.dateTo.slice(0, 10)}</span>
                 <p>Guests: {booking.guests}</p>
                 <p>Booked: {booking.created.slice(0, 10)}</p>
                 <p>Updated: {booking.updated.slice(0, 10)}</p>
                 <p>Booking ID: {booking.id}</p>
               </div>
-            </div>
+              <div className="flex flex-col mx-auto text-center w-1/2">
+                <img className="max-w-[15rem] h-auto w-auto rounded-[25px] max-h-[15rem] mx-auto rounded mt-2" src={booking.customer.avatar?.url} alt="Profile picture"></img>
+                <p>{booking.customer.name}</p>
+                <p>{booking.customer.email}</p>
+                <p>{booking.customer.bio?.slice(0, 50)}</p>
+              </div>
+            </article>
           ))) : ( 
             <div>You have no bookings for this venue.</div>
           )

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { venuesApi, bookingsApi, apiKey } from "../constants/api";
-import { token } from "../constants/localStorage";
+import { getToken } from "../constants/localStorage";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import singleVenueStates from "../constants/singleVenueStates.js";
 import { maxTwoDecimals } from "../constants/handlers.js";
@@ -16,8 +16,8 @@ function Venue() {
   const { id } = useParams();
   const singleVenueApi = venuesApi + "/" + id + "?_bookings=true";
   const { venue, isLoading, isError, errorMessage, maxVisitors } = singleVenueStates(singleVenueApi);
-  console.log("singlevenueapi: ", singleVenueApi)
-  console.log("venue is loading and is error states: ", venue, isLoading, isError)
+  // console.log("singlevenueapi: ", singleVenueApi);
+  // console.log("venue is loading and is error states: ", venue, isLoading, isError)
   const { bookingFeedback, setBookingFeedback } = profileLoginUsage();
 
   const [feedback, setFeedback] = useState(null);
@@ -67,10 +67,12 @@ function Venue() {
   };
 
   async function onSubmitHandler(data) {
-    console.log("onSubmit data:", data);
+    // console.log("onSubmit data:", data);
     // setSubmittedData(data);
 
     // setFeedback(null);
+
+    const token = getToken();
 
     const createBookingOptions = {
       method: "POST",
@@ -86,7 +88,7 @@ function Venue() {
         "X-Noroff-API-Key": apiKey
       }
     };
-    console.log("createBookingOptions: ", createBookingOptions);
+    // console.log("createBookingOptions: ", createBookingOptions);
     
 
     try {
@@ -103,7 +105,7 @@ function Venue() {
       // signup(username, email);
 
       if (resp.ok) {
-        console.log("Booking successful!");
+        // console.log("Booking successful!");
         // setBookedDates(null);
         setBookingFeedback(<div className="text-green-500 font-bold">Your reservation at <span className="underline">{venue.name}</span> was successfully booked!</div>);
         // setFeedback(<div className="text-green-500 font-bold">Your reservation was successfully booked!</div>);
