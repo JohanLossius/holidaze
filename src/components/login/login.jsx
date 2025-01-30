@@ -120,7 +120,9 @@ function Login() {
           navigate(redirectToVenueBooking);
         }
 
-        navigate("/venues");
+        if (!redirectToVenueBooking) {
+          navigate("/venues");
+        }
 
         setFeedback(<div className="flex flex-col justify-center text-center mx-auto h-[10vh] text-green-500 font-bold">
                       <div className="m-2">You were successfully logged in as {username}!</div>
@@ -158,6 +160,7 @@ function Login() {
           onBlur={() => handleBlur("password")}
           id="password-id"
           className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+          type="password"
         />
         <span className="text-red-500">{errors.password?.message}</span>
         <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Log In</button>

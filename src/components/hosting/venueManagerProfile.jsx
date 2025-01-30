@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { profilesApi, apiKey, venuesApi } from "../constants/api.js";
 import { getUsername, getToken } from "../constants/localStorage.js";
 import { profileLoginUsage } from "../constants/context.jsx";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 function VenueManagerProfile() {
 
@@ -113,7 +113,11 @@ function VenueManagerProfile() {
           setBookingsByVenue(json.data);
           setContextError(null);
           setContextLoading(false);
-          document.getElementById("view-bookings-section").scrollIntoView({behavior: "smooth"});
+          
+          // Let Bookings By Venue section be displayed before scroll into view
+          setTimeout(() => {
+            document.getElementById("view-bookings-section").scrollIntoView({behavior: "smooth"});
+          }, 100);
         }
       } catch (error) {
         console.log("bookings by venue error: ", error.message);
@@ -125,13 +129,17 @@ function VenueManagerProfile() {
   // Displays form to update a single venue, and prepopulates it with current data.
   const handleUpdate = (venue) => {
     setSingleVenue(venue);
-    document.getElementById("update-venue-section").scrollIntoView({behavior: "smooth"});
+    setTimeout(() => {
+      document.getElementById("update-venue-section").scrollIntoView({behavior: "smooth"});
+    }, 100);
   }
 
   // Display the form to create a new venue and scrolls towards it position.
   const handleCreateButton = (boolean) => {
     setCreateVenueState(boolean);
-    document.getElementById("create-venue-section").scrollIntoView({behavior: "smooth"});
+    setTimeout(() => {
+      document.getElementById("create-venue-section").scrollIntoView({behavior: "smooth"});
+    }, 100);
   }
 
   // Functionality to delete a venue
@@ -152,6 +160,9 @@ function VenueManagerProfile() {
           setBookingsByVenue(null);
           setVenueManagerFeedback(<div className="text-red-500 font-bold">{venue.name} successfully deleted!</div>)
           updateManager();
+          setTimeout(() => {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }, 150)
         }
       } catch (error) {
         console.log("error delete venue: ", error.message)
@@ -172,6 +183,7 @@ function VenueManagerProfile() {
         }
         if (response.ok) {
           setProfileWithVenues(profileVenuesCont);
+          setVenueManagerState(profileVenuesCont.venueManager);
           if (profileVenuesCont.venues.id >= 1) {
             setProfileVenuesId(profileVenuesCont.venues.id);
           }
@@ -234,7 +246,7 @@ function VenueManagerProfile() {
       <section id="venue-manager-section" className="h-auto text-center flex flex-col items-center mt-4 border-2 bg-tertiary border-secondary w-4/5 mx-auto rounded-[25px]">
           { profileWithVenues ? (
             <section className="flex flex-col mx-auto justify-center justify-between my-4 mx-auto gap-4 w-4/5">
-              <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={profileWithVenues.avatar.url || "/blank-profile-picture.png"} alt="Profile picture"></img>
+              <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" title="Profile picture" src={profileWithVenues.avatar.url || "/blank-profile-picture.png"} alt="Profile picture"></img>
               <h2 className="mx-auto font-bold text-2xl">Venue Manager</h2>
               <h3 className="text-xl font-bold mx-auto">{profileWithVenues.name}</h3>
               <h4 className="text-lg underline">{profileWithVenues.email}</h4>
@@ -244,15 +256,17 @@ function VenueManagerProfile() {
                   {venueManagerFeedback ? <div className="feedback-cont mx-auto text-center font-bold text-green-500 text-lg">{venueManagerFeedback}</div> : null }
                   {profileWithVenues.venues.length >= 1 ? (
                     profileWithVenues.venues.map((venue) => (
-                      <div key={venue.id} className="flex flex-row justify-between items-center w-3/5 mx-auto my-4">
-                        <span>{venue.name}</span>
-                        <span>{venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span>
-                        <div className="flex flex-row gap-2 items-center">
+                      <article key={venue.id} className="flex flex-row gap-2 justify-between items-center w-full mx-auto my-4 p-4 bg-white rounded-[25px]">
+                        <Link to={`/venue/${venue.id}`} className="text-lg font-bold w-1/3">
+                          <span className="">{venue.name}</span>
+                        </Link>
+                        <span className="w-1/3">{venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span>
+                        <div className="flex flex-row gap-2 items-center w-1/3">
                           <button onClick={() => showBookings(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto">Bookings</button>
                           <button onClick={() => handleUpdate(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto">Update</button>
                           <button onClick={() => handleDelete(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto">Delete</button>
                         </div>
-                      </div>
+                      </article>
                     ))) : (
                       <span>You have no venues currently.</span>
                     )}

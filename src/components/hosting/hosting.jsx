@@ -6,7 +6,7 @@ import ViewBookingsByVenue from "./viewBookingsByVenue";
 
 function Hosting() {
   return (
-    <main className="flex flex-col mx-auto justify-between my-4">
+    <main id="hosting-main-id" className="flex flex-col mx-auto justify-between my-4">
       <h1 className="font-bold text-3xl text-center">Hosting</h1>
       <VenueManagerProfile />
       <CreateVenue />

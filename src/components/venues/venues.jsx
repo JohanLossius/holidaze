@@ -98,11 +98,11 @@ function Venues() {
           <input type="search" placeholder="Search by venue title..." name="search" value={query} onChange={handleSearch} className="mx-auto font-bold text-center bg-tertiary w-1/2 min-h-[3.5rem] my-4 rounded-[25px]" />
         </form>
       </section>
-      <section className="flex flex-wrap justify-center justify-between m-4 gap-4">
+      <section className="flex flex-wrap justify-center justify-between w-full">
         {filteredVenues.length >= 1 ? (
             filteredVenues.map((venue, index) => (
-              <Link to={`/venue/${venue.id}`} key={`${venue.id}-${index}`}>
-                <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary">
+              <Link to={`/venue/${venue.id}`} key={`${venue.id}-${index}`} className="w-[30%] mb-4 mx-4 mt-2">
+                <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary w-full">
                   <img 
                     src={venue.media[0]?.url}
                     className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded"
@@ -111,12 +111,12 @@ function Venues() {
                   >
                   </img>
                   <h3 className="font-semibold text-2xl">{venue.name}</h3>
-                  <p className="underline">{venue.location.city}, {venue.location.country}</p>
-                  <p className="underline">{maxTwoDecimals(venue.price)} NOK per day</p>
-                  {venue.rating != 0 ? <p className="underline">{venue.rating}/5 stars</p> : null}
+                  <p className="font-semibold">{venue.location.city}, {venue.location.country}</p>
+                  <p className="font-semibold">{maxTwoDecimals(venue.price)} NOK per day</p>
+                  {venue.rating != 0 ? <p className="font-semibold">{venue.rating}/5 stars</p> : null}
                   {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 100)}...</div> : null}
                   {venue.description.length >= 20 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 99)}</div> : null}
-                  <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Discover</button>
+                  <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto text-lg">Discover</button>
                 </article>
               </Link>
             ))) : (<div>There are no results that match your search!</div>)

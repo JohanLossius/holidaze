@@ -167,12 +167,12 @@ function CreateVenue() {
       console.log("Response venue creation: ", json);
 
       if (!resp.ok) {
+        document.getElementById("create-venue-section").scrollIntoView({behavior: "smooth"});
         setFeedback(<div className="text-red-500 font-bold">{json.errors[0].message}</div>);
         throw new Error(json.errors[0].message);
       }
 
       if (resp.ok) {
-        console.log("venue creation successful");
         // setFeedback(<div className="flex flex-col justify-center text-center mx-auto text-green-500 font-bold">
         //               <div className="">A new venue was created</div>
         //             </div>);
@@ -180,6 +180,9 @@ function CreateVenue() {
         setCreateVenueState(false);
         setVenueManagerFeedback("A new venue was created!")
         updateManager();
+        setTimeout(() => {
+          window.scrollTo({top: 0, behavior: "smooth"});
+        }, 150)
       }
     } catch (error) {
       console.log("Error venue creation: " + error.message);
@@ -211,19 +214,20 @@ function CreateVenue() {
           />
           <span className="text-red-500">{errors.name?.message}</span>
           <label htmlFor="description-id" className="font-bold">Description</label>
-          <input
+          <textarea
             {...register("description")}
             onBlur={() => handleBlur("description")}
             id="description-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 rounded-[25px] h-40 resize-y m-auto break-words p-2"
+            maxLength={1000}
           />
           <span className="text-red-500">{errors.description?.message}</span>
           <label htmlFor="image-id" className="font-bold">Venue image</label>
-          <input
+          <textarea
             {...register("image")}
             onBlur={() => handleBlur("image")}
             id="image-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 rounded-[25px] h-20 resize-y m-auto break-words p-2"
           />
           <span className="text-red-500">{errors.image?.message}</span>
           <label htmlFor="price-id" className="font-bold">Price</label>

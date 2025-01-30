@@ -28,7 +28,7 @@ function ViewBookingsByVenue() {
   if (bookingsByVenue) {
     return (
       <section id="view-bookings-section" className="text-center mx-auto text-center my-4 flex flex-col items-center border-2 bg-tertiary border-secondary w-4/5 rounded-[25px]">
-        <h2 className="text-center mx-auto font-bold text-2xl">Bookings {bookingsByVenue?.name}</h2>
+        <h2 className="text-center mx-auto font-bold text-2xl mt-4">Bookings {bookingsByVenue?.name}</h2>
         <section className="w-4/5">
         {bookingsByVenue?.bookings?.length >= 1 ? (
           bookingsByVenue.bookings.map((booking) => (
@@ -48,7 +48,7 @@ function ViewBookingsByVenue() {
               </div>
             </article>
           ))) : ( 
-            <div>You have no bookings for this venue.</div>
+            <div className="bg-white border-2 rounded-[25px] my-4 p-2 w-full text-center font-bold">You have no bookings for this venue.</div>
           )
         }
         </section>

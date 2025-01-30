@@ -186,16 +186,19 @@ function UpdateVenue() {
       // console.log("Response venue update: ", json);
 
       if (!resp.ok) {
+        document.getElementById("update-venue-section").scrollIntoView({behavior: "smooth"});
         setFeedback(<div className="text-red-500 font-bold">{json.errors[0].message}</div>);
         throw new Error(json.errors[0].message);
       }
 
       if (resp.ok) {
         const venueName = json.data.name;
-        // console.log("venue update successful");
         setSingleVenue(null);
         setVenueManagerFeedback(`${venueName} was updated successfully!`);
         updateManager();
+        setTimeout(() => {
+          window.scrollTo({top: 0, behavior: "smooth"});
+        }, 150)
       }
     } catch (error) {
       console.log("Error venue update: " + error.message);
@@ -226,19 +229,20 @@ function UpdateVenue() {
           />
           <span className="text-red-500">{errors.name?.message}</span>
           <label htmlFor="description-id" className="font-bold">Description</label>
-          <input
+          <textarea
             {...register("description")}
             onBlur={() => handleBlur("description")}
             id="description-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 rounded-[25px] h-40 resize-y m-auto break-words p-2"
+            maxLength={1000}
           />
           <span className="text-red-500">{errors.description?.message}</span>
           <label htmlFor="image-id" className="font-bold">Venue image</label>
-          <input
+          <textarea
             {...register("image")}
             onBlur={() => handleBlur("image")}
             id="image-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 rounded-[25px] h-20 resize-y m-auto break-words p-2"
           />
           <span className="text-red-500">{errors.image?.message}</span>
           <label htmlFor="price-id" className="font-bold">Price</label>

@@ -102,25 +102,19 @@ function Venue() {
         throw new Error(json.errors[0]?.message);
       }
 
-      // signup(username, email);
-
       if (resp.ok) {
-        // console.log("Booking successful!");
-        // setBookedDates(null);
         setBookingFeedback(<div className="text-green-500 font-bold">Your reservation at <span className="underline">{venue.name}</span> was successfully booked!</div>);
-        // setFeedback(<div className="text-green-500 font-bold">Your reservation was successfully booked!</div>);
         window.scrollTo(0, 0);
         reset();
         navigate("/bookings");
       }
     } catch (error) {
       console.log("Error: " + error.message);
-      // setFeedback(<div className="text-red-500 font-bold">{error.message}</div>);
     }
   }
 
   if (isLoading) {
-    return <div>The hamster is running at full speed now, hang on...</div>;
+    return <div>Loading...</div>;
   }
 
   if (isError) {
@@ -145,7 +139,7 @@ function Venue() {
             </div>
             <div className="w-1/2">
               <div className="w-3/5 flex flex-col gap-2 mx-auto bg-tertiary border-secondary border-2 p-4 rounded-[25px]">
-                <h2 className="text-2xl font-bold">Details</h2>
+                {/* <h2 className="text-2xl font-bold">Details</h2>
                 <p className="underline">Address: {venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</p>
                 <p className="underline">Price: {maxTwoDecimals(venue.price)} NOK per day</p>
                 {venue.rating != 0 ? <p className="underline">Rating: {venue.rating}/5 stars</p> : null}
@@ -156,7 +150,25 @@ function Venue() {
                 {venue.maxGuests > 0 ? <p className="underline">Max visitors: {venue.maxGuests}</p> : null}
                 <p className="underline">Venue created at: {venue.created.slice(0, 10)}</p>
                 {venue.updated ? <p className="underline">Venue last updated at: {venue.updated.slice(0, 10)}</p> : null}
-                <p className="underline">Venue id: {venue.id}</p>
+                <p className="underline">Venue id: {venue.id}</p> */}
+
+                <h2 className="text-2xl font-bold">Details</h2>
+                {/* <div className="flex flex-row justify-center items-center">
+                  <span className="underline">Address: </span>
+                  <span className="font-semibold"> {venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span>
+                </div> */}
+                <p className="">Address: <span className="font-semibold">{venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span></p>
+                <p className="">Price: <span className="font-semibold">{maxTwoDecimals(venue.price)} NOK per day</span></p>
+                {venue.rating != 0 ? <p className="">Rating: <span className="font-semibold">{venue.rating}/5 stars</span></p> : null}
+                {venue.meta.parking === true ? <p className="" >Parking space: <span className="font-semibold">Yes</span></p> : <p className="">Parking space: <span className="font-semibold">No</span></p>}
+                {venue.meta.wifi === true ? <p className="" >Wifi: <span className="font-semibold">Yes</span></p> : <p className="">Wifi: <span className="font-semibold">No</span></p>}
+                {venue.meta.breakfast === true ? <p className="" >Breakfast: <span className="font-semibold">Yes</span></p> : <p className="">Breakfast: <span className="font-semibold">No</span></p>}
+                {venue.meta.pets === true ? <p className="">Pets: <span className="font-semibold">Yes</span></p> : <p className="">Pets: <span className="font-semibold">No</span></p>}
+                {venue.maxGuests > 0 ? <p className="">Max visitors: <span className="font-semibold">{venue.maxGuests}</span></p> : null}
+                <p className="">Venue created at: <span className="font-semibold">{venue.created.slice(0, 10)}</span></p>
+                {venue.updated ? <p className="">Venue last updated at: <span className="font-semibold">{venue.updated.slice(0, 10)}</span></p> : null}
+                <p className="">Venue id: <span className="font-semibold">{venue.id}</span></p>
+
                 {loggedInState === false ? (
                 <form className="w-3/5 gap-4 flex flex-col mx-auto text-center justify-between bg-white text-black border-2 p-4 justify-between rounded-[25px]">
                   <img src="/calendar-icon.svg" className="mx-auto"></img>
