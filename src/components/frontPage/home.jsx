@@ -98,10 +98,10 @@ function Home() {
           <input type="search" placeholder="Search by venue title..." name="search" value={query} onChange={handleSearch} className="mx-auto font-bold text-center bg-tertiary w-1/2 min-h-[3.5rem] my-4 rounded-[25px]" />
         </form>
       </section>
-      <section className="flex flex-wrap justify-center justify-between w-full">
+      <section className="flex flex-wrap justify-center justify-between w-full gap-2">
         {filteredVenues.length >= 1 ? (
             filteredVenues.map((venue, index) => (
-              <Link to={`/venue/${venue.id}`} key={`${venue.id}-${index}`} className="w-[30%] mb-4 mx-4 mt-2">
+              <Link to={`/venue/${venue.id}`} key={`${venue.id}-${index}`} className="w-[30%] mb-4 mx-auto mt-2">
                 <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary w-full">
                   <img 
                     src={venue.media[0]?.url}
