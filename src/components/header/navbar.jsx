@@ -8,56 +8,76 @@ function Navbar() {
   const { loggedInState, logout } = profileLoginUsage();
 
   return (
-    <nav className="navbar w-full">
+    <nav className="navbar w-full lg:mt-2 md:mt-0">
       {!loggedInState ? (
-        <ul className="flex flex-row justify-between items-center w-2/3 m-auto">
+        <ul className="text-rose-900 flex flex-row justify-between gap-2 w-full items-center m-auto flex-wrap min-h-[4.5rem] md:flex-wrap min-h-[3rem] s:min-h-[2rem]">
           <li className="m-auto">
             <NavLink to="/" className={({isActive}) => 
-            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]"}>
               Home
             </NavLink>
           </li>
           <li className="m-auto">
             <NavLink to="/signup" className={({isActive}) => 
-            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded-[20px] s:text-[0.7rem] p-0 rounded-[13px]" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[20px] s:text-[0.7rem] p-0 rounded-[13px]"}>
               Sign Up
             </NavLink>
           </li>
           <li className="m-auto">
             <NavLink to="/login" className={({isActive}) => 
-            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded-[20px] s:text-[0.7rem] p-0 rounded-[13px]" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[20px] s:text-[0.7rem] p-0 rounded-[13px]"}>
               Login
             </NavLink>
           </li>
         </ul>
+        // <ul className="flex flex-row justify-between items-center w-4/5 m-auto l:w-full s:min-h-[10rem]">
+        //   <li className="m-auto">
+        //     <NavLink to="/" className={({isActive}) => 
+        //     isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded text-base s:text-[0.5rem] p-0" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded text-base s:text-[0.5rem] p-0"}>
+        //       Home
+        //     </NavLink>
+        //   </li>
+        //   <li className="m-auto">
+        //     <NavLink to="/signup" className={({isActive}) => 
+        //     isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+        //       Sign Up
+        //     </NavLink>
+        //   </li>
+        //   <li className="m-auto">
+        //     <NavLink to="/login" className={({isActive}) => 
+        //     isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+        //       Login
+        //     </NavLink>
+        //   </li>
+        // </ul>
         ) : (
-        <ul className="text-rose-900 flex flex-row justify-between w-[80%] items-center m-auto">
+        <ul className="text-rose-900 flex flex-row justify-between gap-2 w-full items-center m-auto md:min-h-[5.1rem] flex-wrap">
           <li className="m-auto">
             <NavLink to="/venues" className={({isActive}) => 
-            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]"}>
               Venues
             </NavLink>
           </li>
           <li className="m-auto">
             <NavLink to="/bookings" className={({isActive}) => 
-            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]"}>
               Bookings
             </NavLink>
           </li>
           <li className="m-auto">
             <NavLink to="/profile" className={({isActive}) => 
-            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]"}>
               Profile
             </NavLink>
           </li>
           <li className="m-auto">
             <NavLink to="/hosting" className={({isActive}) => 
-            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4"}>
+            isActive ? "text-secondary font-bold bg-tertiary rounded-[25px] p-4 border-2 border-rose-300 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]" : "text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]"}>
               Hosting
             </NavLink>
           </li>
-          <li className="m-auto">
-            <button onClick={() => logout() } className="text-secondary font-bold bg-tertiary rounded-[25px] p-4">Log Out</button>
+          <li className="m-auto s:h-[38px]">
+            <button onClick={() => logout() } className="h-full w-full text-secondary font-bold bg-tertiary rounded-[25px] p-4 lg:p-2 font-semibold rounded-[15px] s:text-[0.7rem] p-0 rounded-[13px]">Log Out</button>
           </li>
         </ul>
       )}

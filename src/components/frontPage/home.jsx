@@ -93,29 +93,29 @@ function Home() {
   return (
     <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
       <h1 className="m-auto font-bold text-3xl">Venues for hire!</h1>
-      <section id="search-section" className="w-1/2 mx-auto">
-        <form className="mx-auto">
-          <input type="search" placeholder="Search by venue title..." name="search" value={query} onChange={handleSearch} className="mx-auto font-bold text-center bg-tertiary w-1/2 min-h-[3.5rem] my-4 rounded-[25px]" />
+      <section id="search-section" className="w-1/2 mx-auto lg:w-4/5 s:w-full">
+        <form className="mx-auto lg:mx-2 s:mx-0">
+          <input type="search" placeholder="Search by venue title..." name="search" value={query} onChange={handleSearch} className="mx-auto font-bold text-center bg-tertiary w-3/5 min-h-[3.5rem] my-4 rounded-[25px] lg:w-full font-semibold xs:font-normal" />
         </form>
       </section>
       <section className="flex flex-wrap justify-center justify-between w-full gap-2">
         {filteredVenues.length >= 1 ? (
             filteredVenues.map((venue, index) => (
-              <Link to={`/venue/${venue.id}`} key={`${venue.id}-${index}`} className="w-[30%] mb-4 mx-auto mt-2">
-                <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary w-full">
+              <Link to={`/venue/${venue.id}`} key={`${venue.id}-${index}`} className="mb-4 mx-auto mt-2 w-[30%] xl:w-[45%] lg:w-[80%] md:w-[90%] s:w-[95%]">
+                <article className="flex flex-col justify-between gap-2 p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary w-full s:p-2 gap-2">
                   <img 
                     src={venue.media[0]?.url}
-                    className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded"
+                    className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded s:max-w-[12rem] xs:max-w-[5rem]"
                     alt={venue.media[0]?.alt}
                     loading="lazy"
                   >
                   </img>
-                  <h3 className="font-semibold text-2xl">{venue.name}</h3>
+                  <h3 className="font-semibold text-2xl truncate">{venue.name}</h3>
                   <p className="font-semibold">{venue.location.city}, {venue.location.country}</p>
                   <p className="font-semibold">{maxTwoDecimals(venue.price)} NOK per day</p>
                   {venue.rating != 0 ? <p className="font-semibold">{venue.rating}/5 stars</p> : null}
-                  {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 100)}...</div> : null}
-                  {venue.description.length >= 20 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic">{venue.description.slice(0, 99)}</div> : null}
+                  {venue.description.length >= 100 ? <div className="max-w-[15rem] mx-auto italic truncate s:max-w-[10rem] text-s xs:max-w-[5rem] text-xs">{venue.description.slice(0, 100)}...</div> : null}
+                  {venue.description.length >= 0 && venue.description.length < 100 ? <div className="max-w-[15rem] mx-auto italic truncate s:max-w-[10rem] text-s xs:max-w-[5rem] text-xs">{venue.description.slice(0, 99)}</div> : null}
                   <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Discover</button>
                 </article>
               </Link>

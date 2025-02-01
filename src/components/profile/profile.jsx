@@ -295,15 +295,17 @@ function Profile() {
   }
 
   return (
-    <main id="profile-main-id" className="h-auto min-h-[80vh] text-center flex flex-col items-center mx-auto my-4 rounded-[25px] border-2 bg-tertiary border-secondary w-4/5">
+    <main id="profile-main-id" className="h-auto min-h-[80vh] text-center flex flex-col items-center mx-auto my-4 rounded-[25px] border-2 bg-tertiary border-secondary w-4/5 lg:w-[95%]">
       <h1 className="mx-auto font-bold text-3xl">Profile</h1>
       { feedback ? <section className="mx-auto text-green-500 font-bold text-center ">{feedback}</section> : null }
       { profileErrorMessage ? <section className="mx-auto font-red-500 font-bold text-center">There was an error updating your profile: {profileErrorMessage}</section> : null }
         { profile ? (
-          <section className="flex flex-col mx-auto justify-center justify-between m-4 gap-4 w-4/5">
+          <section className="flex flex-col mx-auto justify-center justify-between m-4 gap-4 w-4/5 md:w-[95%]">
             <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={avatarUrlState || "/blank-profile-picture.png"} alt="Profile picture"></img>
             <h2 className="text-2xl font-bold mx-auto">{profile.name}</h2>
-            <a href="mailto:contact@holidaze.no" className="text-lg underline mx-auto">{profile.email}</a>
+            <a href={`mailto:${profile.email}`} className="text-lg underline truncate mx-2">{profile.email}</a>
+            {/* <a href={`mailto:${profile.email}`} className="text-lg underline mx-auto truncate break-words overflow-hidden text-ellipsis whitespace-nowrap block">{profile.email}</a>
+             */}
             <div>
               <p className="underline">Bio:</p>
               <span className=""> {bioState}</span>
@@ -317,19 +319,19 @@ function Profile() {
               <span className="">{profile._count.venues}</span>
             </div>
             <div className="flex flex-col w-full text-center">
-              <form className="flex flex-col gap-4 items-center m-auto justify-between text-center w-full mx-2 h-full text-center my-2" onSubmit={handleSubmitAvatar(onSubmitHandlerAvatar)}>
+              <form className="flex flex-col gap-4 items-center m-auto justify-between text-center w-full mx-auto h-full text-center my-2" onSubmit={handleSubmitAvatar(onSubmitHandlerAvatar)}>
                 <label htmlFor="avatar-id" className="font-bold text-lg">Update profile picture</label>
                 <span className="text-red-500">{avatarErrors.avatar?.message}</span>
-                <input
+                <textarea
                   {...registerAvatar("avatar")}
                   onBlur={() => handleBlurAvatar("avatar")}
                   id="avatar-id"
-                  className="text-center bg-white w-full mx-auto rounded-[25px] h-20 text-lg"
+                  className="text-center bg-white w-full mx-auto rounded-[25px] h-20 text-lg py-4"
                   placeholder="Must be live URL and publicly acessible image"
                 />
                 <button type="submit" className="bg-primary w-[8rem] h-[5rem] text-white font-bold p-4 rounded-[25px] mx-auto">Update Avatar</button>
               </form>
-              <form className="flex flex-col gap-4 items-center m-auto justify-between text-center w-full mx-2 h-full text-center my-2" onSubmit={handleSubmitBio(onSubmitHandlerBio)}>
+              <form className="flex flex-col gap-4 items-center m-auto justify-between text-center w-full mx-auto h-full text-center my-2" onSubmit={handleSubmitBio(onSubmitHandlerBio)}>
                 <label htmlFor="bio-id" className="font-bold text-lg">Update bio of max. 250 characters</label>
                 <span className="text-red-500">{bioErrors.bio?.message}</span>
                 <textarea

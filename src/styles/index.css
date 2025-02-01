@@ -8,6 +8,66 @@
   }
 }
 
+/* React calendar component styles unreachable with Tailwind directly */
+
+.react-calendar {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.react-calendar__navigation {
+  max-width: 100% !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 0.1rem !important;
+}
+
+.react-calendar__navigation button {
+  color: black;
+  font-size: 1rem;
+  height: 2rem !important;
+  width: auto !important;
+  padding: 0;
+  min-width: 2.5rem !important;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-size: 0.7rem;
+}
+
+.react-calendar__navigation__label {
+  max-width: 1rem;
+}
+
+.react-calendar__navigation__arrow {
+  max-width: 3px !important;
+}
+
+@media (max-width: 399px) {
+  .react-calendar__navigation button {
+    font-size: 1.5rem;
+    height: 1.8rem !important;
+    min-width: 2rem !important;
+  }
+}
+
+@media (max-width: 325px) {
+  .react-calendar__navigation button {
+    font-size: 1.2rem;
+    height: 1.8rem !important;
+    min-width: 1.5rem !important;
+  }
+}
+@media (max-width: 279px) {
+  .react-calendar__navigation__label__labelText {
+    font-size: 0.5rem;
+  }
+}
+
 /* PREINSTALLED CSS */
 
 /* :root {

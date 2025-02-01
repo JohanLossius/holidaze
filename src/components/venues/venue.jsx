@@ -16,8 +16,6 @@ function Venue() {
   const { id } = useParams();
   const singleVenueApi = venuesApi + "/" + id + "?_bookings=true";
   const { venue, isLoading, isError, errorMessage, maxVisitors } = singleVenueStates(singleVenueApi);
-  // console.log("singlevenueapi: ", singleVenueApi);
-  // console.log("venue is loading and is error states: ", venue, isLoading, isError)
   const { bookingFeedback, setBookingFeedback } = profileLoginUsage();
 
   const [feedback, setFeedback] = useState(null);
@@ -67,10 +65,6 @@ function Venue() {
   };
 
   async function onSubmitHandler(data) {
-    // console.log("onSubmit data:", data);
-    // setSubmittedData(data);
-
-    // setFeedback(null);
 
     const token = getToken();
 
@@ -87,9 +81,7 @@ function Venue() {
         "Authorization": `Bearer ${token}`,
         "X-Noroff-API-Key": apiKey
       }
-    };
-    // console.log("createBookingOptions: ", createBookingOptions);
-    
+    };  
 
     try {
       const resp = await fetch(bookingsApi, createBookingOptions);
@@ -103,7 +95,11 @@ function Venue() {
       }
 
       if (resp.ok) {
-        setBookingFeedback(<div className="text-green-500 font-bold">Your reservation at <span className="underline">{venue.name}</span> was successfully booked!</div>);
+        setBookingFeedback(
+        <div className="text-green-500 font-bold mx-auto">
+          <p className="mx-2">Your reservation was successfully booked at:</p>
+          <p className="mx-2"><span className="break-all">{venue.name}!</span></p>
+        </div>);
         window.scrollTo(0, 0);
         reset();
         navigate("/bookings");
@@ -124,39 +120,21 @@ function Venue() {
   if (venue) {
     return (
       <main className="h-auto min-h-[80vh] text-center flex flex-col items-center w-full mt-4">
-        {/* <section key={venue.id} className="flex flex-col justify-between p-4 border-2 rounded-[25px] border-secondary bg-tertiary font-primary"> */}
-          <h1 className="mx-auto font-bold text-3xl my-3">{venue.name}</h1>
-          <div className="w-4/5 p-4 mx-auto italic">{venue.description}</div>
-          <div className="flex flex-row w-full mx-2">
-            <div className="w-1/2">
+          <h1 className="mx-auto font-bold text-3xl my-2 md:my-0 px-2 text-xl break-all">{venue.name}</h1>
+          <div className="w-4/5 p-4 mx-auto italic md:p-2 text-s break-all">{venue.description}</div>
+          <div className="flex flex-row w-full mx-2 md:flex-col xs:m-0">
+            <div className="w-1/2 md:w-4/5 mx-auto s:w-[100%]">
               {venue.media.length >= 1 ? (
                 venue.media.map((image, index) => (
-                  <img src={image.url} key={`${image.url}-${index}`} className="max-w-[30rem] h-auto w-auto rounded-lg max-h-[30rem] mx-auto rounded my-2" alt={image.alt}></img>
+                  <img src={image.url} key={`${image.url}-${index}`} className="max-w-[30rem] h-auto w-auto rounded-lg max-h-[30rem] mx-auto rounded my-2 xl:w-[95%]" alt={image.alt}></img>
                 ))
               ) : (
                 <img src={venue.media[0]?.url} className="max-w-[30rem] h-auto w-auto rounded-lg max-h-[30rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
               )}
             </div>
-            <div className="w-1/2">
-              <div className="w-3/5 flex flex-col gap-2 mx-auto bg-tertiary border-secondary border-2 p-4 rounded-[25px]">
-                {/* <h2 className="text-2xl font-bold">Details</h2>
-                <p className="underline">Address: {venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</p>
-                <p className="underline">Price: {maxTwoDecimals(venue.price)} NOK per day</p>
-                {venue.rating != 0 ? <p className="underline">Rating: {venue.rating}/5 stars</p> : null}
-                {venue.meta.parking === true ? <p className="underline">Parking space: Yes</p> : <p className="underline">Parking space: No</p>}
-                {venue.meta.wifi === true ? <p className="underline">Wifi: Yes</p> : <p className="underline">Wifi: No</p>}
-                {venue.meta.breakfast === true ? <p className="underline">Breakfast: Yes</p> : <p className="underline">Breakfast: No</p>}
-                {venue.meta.pets === true ? <p className="underline">Pets: Yes</p> : <p className="underline">Pets: No</p>}
-                {venue.maxGuests > 0 ? <p className="underline">Max visitors: {venue.maxGuests}</p> : null}
-                <p className="underline">Venue created at: {venue.created.slice(0, 10)}</p>
-                {venue.updated ? <p className="underline">Venue last updated at: {venue.updated.slice(0, 10)}</p> : null}
-                <p className="underline">Venue id: {venue.id}</p> */}
-
-                <h2 className="text-2xl font-bold">Details</h2>
-                {/* <div className="flex flex-row justify-center items-center">
-                  <span className="underline">Address: </span>
-                  <span className="font-semibold"> {venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span>
-                </div> */}
+            <div className="w-1/2 md:w-4/5 mx-auto s:w-[95%] s:w-[100%]">
+              <div className="w-3/5 flex flex-col gap-2 mx-auto bg-tertiary border-secondary border-2 p-4 rounded-[25px] my-2 xl:w-[95%] md:text-[0.8rem] p-2 s:p-2 s:w-full xs:mx-0">
+                <h2 className="text-2xl font-bold md:text-lg">Venue details</h2>
                 <p className="">Address: <span className="font-semibold">{venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span></p>
                 <p className="">Price: <span className="font-semibold">{maxTwoDecimals(venue.price)} NOK per day</span></p>
                 {venue.rating != 0 ? <p className="">Rating: <span className="font-semibold">{venue.rating}/5 stars</span></p> : null}
@@ -167,15 +145,15 @@ function Venue() {
                 {venue.maxGuests > 0 ? <p className="">Max visitors: <span className="font-semibold">{venue.maxGuests}</span></p> : null}
                 <p className="">Venue created at: <span className="font-semibold">{venue.created.slice(0, 10)}</span></p>
                 {venue.updated ? <p className="">Venue last updated at: <span className="font-semibold">{venue.updated.slice(0, 10)}</span></p> : null}
-                <p className="">Venue id: <span className="font-semibold">{venue.id}</span></p>
+                <p className="break-all">Venue id: <span className="font-semibold">{venue.id}</span></p>
 
                 {loggedInState === false ? (
-                <form className="w-3/5 gap-4 flex flex-col mx-auto text-center justify-between bg-white text-black border-2 p-4 justify-between rounded-[25px]">
+                <form className="w-3/5 gap-4 flex flex-col mx-auto text-center justify-between bg-white text-black border-2 p-2 justify-between rounded-[25px] lg:w-4/5 md:w-[95%] p-2 s:w-full">
                   <img src="/calendar-icon.svg" className="mx-auto"></img>
                   <h3 className="text-2xl font-bold mx-auto">Book your stay today</h3>
                   <span className="text-red-500">{errors.guests?.message}</span>
-                  <label htmlFor="guests-id" className="font-bold">Visitors:</label>
-                  <input disabled className="p-2 rounded-lg min-w-[10rem] text-center bg-tertiary text-black" placeholder="Number of visitors"></input>
+                  <label htmlFor="guests-id" className="font-bold">Nr. of visitors:</label>
+                  <input disabled className="p-2 rounded-lg min-w-[10rem] text-center bg-tertiary text-black md:min-w-[5rem] s:mx-2" placeholder="Visitors"></input>
                   <Link to="/login"
                     state={{ redirectToVenueBooking: `/venue/${venue.id}` }}
                   >
@@ -189,28 +167,27 @@ function Venue() {
                     setSelectedDates={setSelectedDates}
                     errorMessaging={errorMessaging}
                     setErrorMessaging={setErrorMessaging}
+                    className="s:mx-2"
                   />
                   <Link to="/login"
                     state={{ redirectToVenueBooking: `/venue/${venue.id}` }}
                   >
-                    <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[18rem] mx-auto">Log in to book venue</button>
+                    <button className="rounded-lg bg-primary text-white p-2 font-bold max-w-[18rem] mx-auto s:mb-2">Log in to book venue</button>
                   </Link>
                 </form>
                 ) : (
-                  <form onSubmit={handleSubmit(onSubmitHandler)} className="w-3/5 gap-4 flex flex-col mx-auto text-center text-black bg-white border-2 p-4 justify-between rounded-[25px]">
+                  <form onSubmit={handleSubmit(onSubmitHandler)} className="w-3/5 gap-4 flex flex-col mx-auto text-center text-black bg-white border-2 p-4 justify-between rounded-[25px] lg:w-4/5 md:w-[95%] p-2 s:w-full">
                     <img src="/calendar-icon.svg" className="mx-auto"></img>
                     <h3 className="text-2xl font-bold mx-auto">Book your stay today!</h3>
                     {feedback ? <p className="mx-auto">{feedback}</p> : null }
-                    {/* <input className="p-2 rounded-lg min-w-[10rem] text-center bg-tertiary text-black" placeholder="Date from"></input>
-                    <input className="p-2 rounded-lg min-w-[10rem] text-center bg-tertiary text-black" placeholder="Date to"></input> */}
                     <span className="text-red-500">{errors.guests?.message}</span>
-                    <label htmlFor="guests-id" className="font-bold">Visitors:</label>
+                    <label htmlFor="guests-id" className="font-bold">Nr. of visitors:</label>
                     <input
                       {...register("guests")}
                       onBlur={() => handleBlur("guests")}
                       id="guests-id"
-                      className="p-2 rounded-lg min-w-[10rem] text-center bg-tertiary text-black"
-                      placeholder="Enter number of visitors"
+                      className="p-2 rounded-lg min-w-[10rem] text-center bg-tertiary text-black md:min-w-[5rem] s:mx-2"
+                      placeholder="Visitors"
                     />
                     <BookingCalendar 
                       bookedDates={bookedDates}
@@ -219,6 +196,7 @@ function Venue() {
                       setSelectedDates={setSelectedDates}
                       errorMessaging={errorMessaging}
                       setErrorMessaging={setErrorMessaging}
+                      className="s:mx-2"
                     />
                     <button type="submit" className="rounded-lg bg-primary text-white p-2 font-bold max-w-[7rem] mx-auto">Book</button>
                   </form>

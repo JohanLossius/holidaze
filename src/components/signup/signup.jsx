@@ -112,10 +112,10 @@ function Signup() {
       // signup(username, email);
 
       if (resp.ok) {
-        setFeedback(<div className="flex flex-col justify-center text-center mx-auto h-[15vh] text-green-500 font-bold">
+        setFeedback(<div className="flex flex-col justify-center text-center mx-auto min-h-[15vh] text-green-500 font-bold s:font-semibold text-s">
                       <div className="">Your profile was successfully created!</div>
-                      <div className="">Username: {username}</div>
-                      <div className="">Email: {email}</div>
+                      <div className="underline break-all">Username: {username}</div>
+                      <div className="break-all underline">Email: {email}</div>
                       <div className="">Get started by logging in here: <Link to="/login" className="underline">Login</Link></div>
                     </div>);
         reset();
@@ -127,23 +127,23 @@ function Signup() {
   };
 
   return (
-    <main className="h-[85vh] w-full m-auto">
+    <main className="w-full m-auto mb-6">
       <section className="feedback-cont">
-        <div className="flex flex-col h-[20vh] justify-center text-center p-2">
-          <h2 className="text-center font-bold text-3xl p-2 h-[5vh]">Sign up</h2>
-          {feedback ? <div className="text-center h-[15vh] m-auto flex flex-col justify-center">{feedback}</div> :
-          <div className="flex flex-col h-[15vh] justify-center text-center p-4">
+        <div className="flex flex-col justify-center text-center p-2">
+          <h2 className="text-center font-bold text-3xl p-2">Sign up</h2>
+          {feedback ? <div className="text-center m-auto flex flex-col justify-center">{feedback}</div> :
+          <div className="flex flex-col justify-center text-center p-4">
             <span className="span-contact text-center m-auto">Fill in the form below to create your profile.</span>
           </div>}
         </div>
       </section>
-      <form className="flex flex-col m-auto justify-between text-center h-[55vh]" onSubmit={handleSubmit(onSubmitHandler)}>
+      <form className="flex flex-col m-auto justify-between text-center min-h-[27rem] lg:min-h-[20rem]" onSubmit={handleSubmit(onSubmitHandler)}>
         <label htmlFor="first-name-id">Your first name</label>
         <input
           {...register("firstName")}
           onBlur={() => handleBlur("firstName")}
           id="first-name-id"
-          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px] lg:w-3/5 md:w-4/5 s:w-[90%] xs:w-[95%]"
         />
         <span className="text-red-500">{errors.firstName?.message}</span>
         <label htmlFor="last-name-id">Your last name</label>
@@ -151,7 +151,7 @@ function Signup() {
           {...register("lastName")}
           onBlur={() => handleBlur("lastName")}
           id="last-name-id"
-          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px] lg:w-3/5 md:w-4/5 s:w-[90%] xs:w-[95%]"
         />
         <span className="text-red-500">{errors.lastName?.message}</span>
         <label htmlFor="email-id">Your email</label>
@@ -159,15 +159,16 @@ function Signup() {
           {...register("email")}
           onBlur={() => handleBlur("email")}
           id="email-id"
-          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px] lg:w-3/5 md:w-4/5 s:w-[90%] xs:w-[95%]"
         />
         <span className="text-red-500">{errors.email?.message}</span>
         <label htmlFor="password-id">Your password</label>
         <input
           {...register("password")}
+          type="password"
           onBlur={() => handleBlur("password")}
           id="password-id"
-          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px] lg:w-3/5 md:w-4/5 s:w-[90%] xs:w-[95%]"
         />
         <span className="text-red-500">{errors.password?.message}</span>
         <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Sign Up</button>

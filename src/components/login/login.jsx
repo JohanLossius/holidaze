@@ -124,34 +124,34 @@ function Login() {
           navigate("/venues");
         }
 
-        setFeedback(<div className="flex flex-col justify-center text-center mx-auto h-[10vh] text-green-500 font-bold">
-                      <div className="m-2">You were successfully logged in as {username}!</div>
-                      <div className="m-2">Get started here: <Link to="/venues" className="underline">Venues</Link></div>
+        setFeedback(<div className="flex flex-col justify-center text-center mx-auto min-h-[15vh] text-green-500 font-bold s:font-semibold text-s">
+                      <p className="m-2">You were successfully logged in as:</p>
+                      <p className="underline break-all">{username}</p>
+                      <p className="m-2">Get started here: <Link to="/venues" className="underline">Venues</Link></p>
                     </div>);
         reset();
       }
 
     } catch (error) {
       console.log("Error: " + error.message);
-      // setFeedback(<div className="text-red-500 font-bold">{error.message}</div>);
     }
   }
     
   return (
-    <main className="h-[85vh] w-full m-auto">
-      <section className="feedback-cont">
-        <div className="flex flex-col h-[20vh] justify-between text-center p-4">
-          <h2 className="text-center font-bold text-3xl p-2 h-[10vh]">Login</h2>
-          {feedback ? <div className="text-center h-[10vh] m-auto">{feedback}</div> : <div className="text-center m-auto h-[10vh]">Fill in the form to log in.</div>}
+    <main className="w-full m-auto mb-4">
+      <section className="">
+        <div className="flex flex-col justify-between text-center p-4 s:p-2">
+          <h2 className="text-center font-bold text-3xl p-2">Login</h2>
+          {feedback ? <div className="text-center min-h-[10vh] m-auto">{feedback}</div> : <div className="text-center mx-auto my-2 min-h-[3rem]">Fill in the form to log in.</div>}
         </div>
       </section>
-      <form className="flex flex-col m-auto justify-between text-center h-[55vh]" onSubmit={handleSubmit(onSubmitHandler)}>
+      <form className="flex flex-col m-auto justify-between text-center min-h-[27rem] lg:min-h-[20rem]" onSubmit={handleSubmit(onSubmitHandler)}>
         <label htmlFor="email-id">Your email</label>
         <input
           {...register("email")}
           onBlur={() => handleBlur("email")}
           id="email-id"
-          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px] lg:w-3/5 md:w-4/5 s:w-[90%] xs:w-[95%]"
         />
         <span className="text-red-500">{errors.email?.message}</span>
         <label htmlFor="password-id">Your password</label>
@@ -159,7 +159,7 @@ function Login() {
           {...register("password")}
           onBlur={() => handleBlur("password")}
           id="password-id"
-          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px]"
+          className="text-center bg-tertiary w-1/2 mx-auto rounded-[25px] lg:w-3/5 md:w-4/5 s:w-[90%] xs:w-[95%]"
           type="password"
         />
         <span className="text-red-500">{errors.password?.message}</span>

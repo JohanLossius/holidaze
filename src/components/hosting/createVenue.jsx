@@ -196,21 +196,21 @@ function CreateVenue() {
 
   if (createVenueState) {
     return (
-      <section id="create-venue-section" className="text-center border-2 bg-tertiary border-secondary w-4/5 mx-auto rounded-[25px] my-2 p-2">
-        <h2 className="text-center mx-auto font-bold text-2xl">Create Venue</h2>
+      <section id="create-venue-section" className="text-center border-2 bg-tertiary border-secondary w-4/5 mx-auto rounded-[25px] my-2 p-2 xl:w-[90%] lg:w-[95%]">
+        <h2 className="text-center mx-auto font-bold text-2xl s:text-lg xs:text-base">Create Venue</h2>
         {feedback ? <div className="text-center m-auto flex flex-col justify-center">{feedback}</div> : null }
         {/* {feedback ? <div className="text-center m-auto flex flex-col justify-center">{feedback}</div> : (
           <div className="flex flex-col justify-center text-center p-4">
             <span className="text-center m-auto font-bold text-lg">Create a new venue by filling out the relevant data:</span>
           </div>
         )} */}
-        <form className="flex flex-col m-auto justify-between text-center gap-2 mt-4" onSubmit={handleSubmit(onSubmitHandler)}>
+        <form className="flex flex-col m-auto justify-between text-center gap-2 mt-4 xl:w-full" onSubmit={handleSubmit(onSubmitHandler)}>
           <label htmlFor="name-id" className="font-bold">Title of venue</label>
-          <input
+          <textarea
             {...register("name")}
             onBlur={() => handleBlur("name")}
             id="name-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 mx-auto rounded-[25px] xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.name?.message}</span>
           <label htmlFor="description-id" className="font-bold">Description</label>
@@ -218,7 +218,7 @@ function CreateVenue() {
             {...register("description")}
             onBlur={() => handleBlur("description")}
             id="description-id"
-            className="text-center bg-white w-1/2 rounded-[25px] h-40 resize-y m-auto break-words p-2"
+            className="text-center bg-white w-1/2 rounded-[25px] h-40 resize-y m-auto break-words p-2 xl:w-4/5 s:w-[95%]"
             maxLength={1000}
           />
           <span className="text-red-500">{errors.description?.message}</span>
@@ -227,7 +227,7 @@ function CreateVenue() {
             {...register("image")}
             onBlur={() => handleBlur("image")}
             id="image-id"
-            className="text-center bg-white w-1/2 rounded-[25px] h-20 resize-y m-auto break-words p-2"
+            className="text-center bg-white w-1/2 rounded-[25px] h-20 resize-y m-auto break-words p-2 xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.image?.message}</span>
           <label htmlFor="price-id" className="font-bold">Price</label>
@@ -235,7 +235,7 @@ function CreateVenue() {
             {...register("price")}
             onBlur={() => handleBlur("price")}
             id="price-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 mx-auto rounded-[25px] xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.price?.message}</span>
           <label htmlFor="max-guests-id" className="font-bold">Max guests</label>
@@ -244,17 +244,17 @@ function CreateVenue() {
             type="number"
             onBlur={() => handleBlur("maxGuests")}
             id="max-guests-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 mx-auto rounded-[25px] xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.maxGuests?.message}</span>
-          <div className="flex flex-row justify-between items-center w-1/2 mx-auto">
+          <div className="flex flex-row justify-between items-center w-4/5 mx-auto gap-2 s:flex-col">
             <label htmlFor="wifi-id" className="font-bold">Wifi</label>
             <input
               type="checkbox"
               {...register("wifi")}
               onBlur={() => handleBlur("wifi")}
               id="wifi-id"
-              className="text-center bg-white h-[3.5rem] w-[3.5rem] mx-auto rounded-[25px]"
+              className="text-center bg-white h-[2.5rem] w-[2.5rem] mx-auto rounded-[25px]"
             />
             <span className="text-red-500">{errors.wifi?.message}</span>
             <label htmlFor="parking-id" className="font-bold">Parking</label>
@@ -263,7 +263,7 @@ function CreateVenue() {
               {...register("parking")}
               onBlur={() => handleBlur("parking")}
               id="parking-id"
-              className="text-center bg-white h-[3.5rem] w-[3.5rem] mx-auto rounded-[25px]"
+              className="text-center bg-white h-[2.5rem] w-[2.5rem] mx-auto rounded-[25px]"
             />
             <span className="text-red-500">{errors.parking?.message}</span>
             <label htmlFor="breakfast-id" className="font-bold">Breakfast</label>
@@ -272,7 +272,7 @@ function CreateVenue() {
               {...register("breakfast")}
               onBlur={() => handleBlur("breakfast")}
               id="breakfast-id"
-              className="text-center bg-white h-[3.5rem] w-[3.5rem] mx-auto rounded-[25px]"
+              className="text-center bg-white h-[2.5rem] w-[2.5rem] mx-auto rounded-[25px]"
             />
             <span className="text-red-500">{errors.pets?.message}</span>
             <label htmlFor="pets-id" className="font-bold">Pets</label>
@@ -281,7 +281,7 @@ function CreateVenue() {
               type="checkbox"
               onBlur={() => handleBlur("pets")}
               id="pets-id"
-              className="text-center bg-white h-[3.5rem] w-[3.5rem] mx-auto rounded-[25px]"
+              className="text-center bg-white h-[2.5rem] w-[2.5rem] mx-auto rounded-[25px]"
             />
             <span className="text-red-500">{errors.pets?.message}</span>
           </div>

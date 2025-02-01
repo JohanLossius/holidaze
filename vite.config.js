@@ -11,6 +11,7 @@ export default defineConfig({
     rollupOptions: {
       input: "./index.html", // Entry point for Vite
     },
+    sourcemap: false,
   },
   server: {
     open: true, // Automatically opens the browser on dev server start
