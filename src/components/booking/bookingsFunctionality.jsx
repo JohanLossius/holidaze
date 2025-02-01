@@ -135,7 +135,7 @@ function BookingsFunctionality() {
               <div className="mx-2 mt-2 w-1/2 md:w-full mx-auto">
                 <img src={booking.venue.media[0]?.url} alt="Venue image" className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[15rem] mx-auto rounded my-2 lg:max-w-[15rem] md:max-w-[10rem] my-0 s:max-w-[7rem]"></img>
                 <h3 className="font-bold text-2xl break-all">{booking.venue.name}</h3>
-                { booking.venue.description.length > 300 ? <p className="max-w-[25rem] h-auto w-auto max-h-[20rem] mx-auto my-4 italic break-all md:text-[0.9rem]">{booking.venue.description.slice(0, 200)}...</p> : <p className="max-w-[25rem] h-auto w-auto max-h-[15rem] mx-auto my-4 italic break-all">{booking.venue.description}</p>}
+                { booking.venue.description.length > 300 ? <p className="max-w-[25rem] h-auto w-auto max-h-[20rem] mx-auto my-4 italic break-words whitespace-normal md:text-[0.9rem]">{booking.venue.description.slice(0, 200)}...</p> : <p className="max-w-[25rem] h-auto w-auto max-h-[15rem] mx-auto my-4 italic break-words whitespace-normal break-all">{booking.venue.description}</p>}
                 <div className="my-2 md:text-[0.9rem]">
                   <p className="">Venue ID:</p>
                   <span className="font-semibold break-all"> {booking.venue.id}</span>

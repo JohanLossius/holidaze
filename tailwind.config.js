@@ -24,7 +24,7 @@ module.exports = {
       },
       colors: {
         primary: "#95002B",
-        secondary: "#FDA4B1",
+        secondary: "#FFC0CB",
         tertiary: "#F5F1F1",
       },
     //   screens: {
