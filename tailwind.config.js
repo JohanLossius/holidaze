@@ -12,8 +12,6 @@ module.exports = {
         md: {"max": "768px"},
         s: {"max": "480px"},
         xs: {"max": "280px"},
-      // "mobile-landscape": {"min": "650px", "max": "1000px"},
-      // "ipad-landscape": {"min": "1000px", "max": "1200px"},
     },
     extend: {
       fontSize: {
