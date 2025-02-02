@@ -131,7 +131,7 @@ function BookingsFunctionality() {
       {bookings.length >= 1 ? (
         bookings.map((booking) => (
           <article key={booking.id} className="mx-auto w-3/5 flex flex-col justify-between gap-2 border-2 rounded-[25px] border-secondary bg-tertiary font-primary xl:w-[90%] lg:w-[95%] md:w-[98%] p-2">
-            <div className="flex flex-row mx-auto md:flex-col">
+            <div className="flex flex-row mx-2 md:flex-col">
               <div className="mx-2 mt-2 w-1/2 md:w-full mx-auto">
                 <img src={booking.venue.media[0]?.url} alt="Venue image" className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[15rem] mx-auto rounded my-2 lg:max-w-[15rem] md:max-w-[10rem] my-0 s:max-w-[7rem]"></img>
                 <h3 className="font-bold text-2xl break-all">{booking.venue.name}</h3>

@@ -8,6 +8,10 @@
   }
 }
 
+body {
+  @apply font-primary !important;
+}
+
 /* React calendar component styles unreachable with Tailwind directly */
 
 .react-calendar {

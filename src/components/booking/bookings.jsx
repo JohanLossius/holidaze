@@ -7,7 +7,7 @@ function Bookings() {
   const { bookingFeedback, setBookingFeedback } = profileLoginUsage();
   const navigate = useLocation();
 
-  // // Make sure booking feedback doesn't linger after navigating to new pages
+  // Make sure booking feedback doesn't linger after navigating to new pages
   // const location = useLocation();
   // useEffect(() => {
   //   console.log("Current pathname:", location.pathname);

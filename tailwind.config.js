@@ -21,30 +21,14 @@ module.exports = {
       },
       fontFamily: {
         primary: ["Dosis", "sans-serif"],
+        secondary: ["Segoe UI"],
       },
       colors: {
         primary: "#95002B",
         secondary: "#FFC0CB",
         tertiary: "#F5F1F1",
       },
-    //   screens: {
-    //     "2xl": {"min": "1700px"},
-    //     "xl": {"max": "1699px"},
-    //     "lg": {"max": "1439px"},
-    //     "md": {"max": "975px"},
-    //     "s": {"max": "767px"},
-    //     "xs": {"max": "479px"},
-    //     "xxs": {"max": "279px"},
-    //     "mobile-landscape": {"min": "650px", "max": "1000px"},
-    //     "ipad-landscape": {"min": "1000px", "max": "1200px"},
-    //   }
     }
   },
   plugins: [],
 };
-
-
-// ujnused code
-
-// primary: ["Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"],
-// secondary: ["Arvo", "Times New Roman", "serif"],
