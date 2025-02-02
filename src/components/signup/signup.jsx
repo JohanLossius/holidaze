@@ -4,8 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { signupApi } from "../constants/api.js";
-// import { signupApi, apiKey } from "../constants/api.js";
-// import { profileLoginUsage } from "../constants/context.jsx";
 
 const schema = yup
   .object({
@@ -13,7 +11,7 @@ const schema = yup
       .string()
       .min(2, "Your first name must be 2 characters or more.")
       .max(99, "Your first name must be less than 100 characters.")
-      .typeError("Your first name must be 4-99 characters.")
+      .typeError("Your first name must be 2-99 characters.")
       .required("Please enter your first name"),
     lastName: yup
       .string()
@@ -29,26 +27,23 @@ const schema = yup
       .string()
       .min(8, "Your password must be 8 characters or more.")
       .max(100, "Your password must be max 100 characters.")
-      .typeError("Your password (string) must be 8-100 characters.")
+      .typeError("Your password must be 8-100 characters.")
       .required("Please enter a valid password of 8-100 characters."),
   })
   .required();
 
 
 function Signup() {
-  // const [submittedData, setSubmittedData] = useState(null);
   const [feedback, setFeedback] = useState(null);
-
-  // const { loggedInState, logout } = profileLoginUsage();
   
   const {
     register,
     handleSubmit,
+    trigger,
+    getValues,
+    reset,
     formState:
       { errors },
-      trigger,
-      getValues,
-      reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -72,6 +67,37 @@ function Signup() {
     }
   };
 
+  /**
+  * Handles user signup by sending form data to the API
+  * Updates UI feedback based on success or failure
+  * @async
+  * @param {object} data - takes the data inputted for the signup form
+  * @param {string} data.firstName - The user's first name.
+  * @param {string} data.lastName - The user's last name.
+  * @param {string} data.email - The user's email address.
+  * @param {string} data.password - The user's password.
+  * @param {object} json Succesful response from the API is returned as an object, and the user data is nested within an object called "data"
+  * 
+  * @example
+  * // example succesful API response
+  * {
+      "data": {
+        "name": "arnulf_friedenstein",
+        "email": "arnulf_friedenstein@stud.noroff.no",
+        "bio": null,
+        "avatar": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=400&w=400",
+          "alt": "A blurry multi-colored rainbow background"
+        },
+        "banner": {
+          "url": "https://images.unsplash.com/photo-1579547945413-497e1b99dac0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&h=500&w=1500",
+          "alt": "A blurry multi-colored rainbow background"
+        }
+      },
+      "meta": {}
+    }
+  */
+
   async function onSubmitHandler(data) {
 
     localStorage.clear();
@@ -93,7 +119,6 @@ function Signup() {
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
-        // "X-Noroff-API-Key": apiKey,
       },
     };
 
@@ -108,8 +133,6 @@ function Signup() {
 
       const username = json.data.name;
       const email = json.data.email;
-
-      // signup(username, email);
 
       if (resp.ok) {
         setFeedback(<div className="flex flex-col justify-center text-center mx-auto min-h-[15vh] text-green-500 font-bold s:font-semibold text-s">

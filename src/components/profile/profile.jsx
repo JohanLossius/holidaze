@@ -27,14 +27,6 @@ const schemaBio = yup
 })
 .required();
 
-// const schemaVenueManager = yup
-// .object({
-//   venueManager: yup
-//     .boolean()
-//     .required("Please mark whether you would like to be a Venue Manager."),
-// })
-// .required();
-
 function Profile() {
 
   const { avatarUrlState, setAvatarUrlState, bioState, setBioState, venueManagerState, setVenueManagerState } = profileLoginUsage();
@@ -49,13 +41,6 @@ function Profile() {
   const username = getUsername();
   const token = getToken();
   const singleProfileApi = `${profilesApi}/${username}`;
-
-  // const optionsApiKey = {
-  //   headers: {
-  //     "Authorization": `Bearer ${token}`,
-  //     "X-Noroff-API-Key": apiKey
-  //   }
-  // };
 
   const {
     register: registerAvatar,
@@ -137,18 +122,20 @@ function Profile() {
       const json = await resp.json();
 
       if (!resp.ok) {
-        setProfileErrorMessage(json.errors[0].message);
+        setProfileErrorMessage(<div className="text-red-500">{json.errors[0]?.message || "An error occurred."}</div>);
         setFeedback(null);
-        throw new Error(json.errors[0].message);
+        throw new Error(json.errors[0]?.message);
       }
 
       if (resp.ok) {
         const avatarUrl = json.data.avatar.url;
 
+        // Updates avatar upon successful response
         setAvatarUrlState(avatarUrl);
         setFeedback("Your avatar was successfully updated!")
         setProfileErrorMessage(null);
 
+        // Resets avatar input field upon successful update
         resetAvatar();
       }
 
@@ -179,13 +166,15 @@ function Profile() {
       const json = await resp.json();
 
       if (!resp.ok) {
+        // Scrolls to top so user can see feedback message in viewport
         document.getElementById("profile-main-id").scrollIntoView({behavior: "smooth"});
-        setProfileErrorMessage(json.errors[0].message);
+        setProfileErrorMessage(<div className="text-red-500">{json.errors[0]?.message || "An error occurred."}</div>);
         setFeedback(null);
-        throw new Error(json.errors[0].message);
+        throw new Error(json.errors[0]?.message);
       }
 
       if (resp.ok) {
+        // Scrolls to top so user can see feedback message in viewport
         document.getElementById("profile-main-id").scrollIntoView({behavior: "smooth"});
         const bioConst = json.data.bio;
         setBioState(bioConst);
@@ -193,6 +182,7 @@ function Profile() {
         setFeedback("Your bio was successfully updated!")
         setProfileErrorMessage(null);
 
+        // Bio input field is reset with updated bio data from successful response
         resetBio();
       }
 
@@ -202,9 +192,7 @@ function Profile() {
   }
 
   // venuemanager handler form
-
   const registerAsVenueManager = async () => {
-
     const requestVenueManagerUpdate = {
       method: "PUT",
       body: JSON.stringify({
@@ -216,24 +204,24 @@ function Profile() {
         "X-Noroff-API-Key": apiKey
       },
     };
-
-        
+      
     try {
       const resp = await fetch(singleProfileApi, requestVenueManagerUpdate);
       const json = await resp.json();
 
       if (!resp.ok) {
-        setProfileErrorMessage(json.errors[0].message);
+        setProfileErrorMessage(json.errors[0]?.message || "An error occurred.");
         setFeedback(null);
-        throw new Error(json.errors[0].message);
+        throw new Error(json.errors[0]?.message);
       }
 
       if (resp.ok) {
         const venueManagerConst = json.data.venueManager;
 
+        // venue manager state controls what functionality is displayed on the site
         setVenueManagerState(venueManagerConst);
 
-        setFeedback("Venue Manager state updated!")
+        setFeedback("You are now a Venue Manager!");
         setProfileErrorMessage(null);
       }
 
@@ -242,10 +230,17 @@ function Profile() {
     }
   }
 
+  /**
+   * Fetches user profile data
+   * Runs inside useEffect and updates profile state for further use
+   * @async
+   * @function getProfile 
+   * @returns {Promise<Object>} Resolves to an object containing profile data
+   * @throws {Error} Throws error if API call fails
+   */
   useEffect(() => {
     async function getProfile() {
       try {
-        // Headers
         const optionsProfile = {
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -302,10 +297,8 @@ function Profile() {
         { profile ? (
           <section className="flex flex-col mx-auto justify-center justify-between m-4 gap-4 w-4/5 md:w-[95%]">
             <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={avatarUrlState || "/blank-profile-picture.png"} alt="Profile picture"></img>
-            <h2 className="text-2xl font-bold mx-auto">{profile.name}</h2>
+            <h2 className="text-2xl font-bold mx-auto break-all">{profile.name}</h2>
             <a href={`mailto:${profile.email}`} className="text-lg underline truncate mx-2">{profile.email}</a>
-            {/* <a href={`mailto:${profile.email}`} className="text-lg underline mx-auto truncate break-words overflow-hidden text-ellipsis whitespace-nowrap block">{profile.email}</a>
-             */}
             <div>
               <p className="underline">Bio:</p>
               <span className=""> {bioState}</span>
@@ -347,10 +340,10 @@ function Profile() {
                 {!venueManagerState ? (
                   <div id="register-venue-manager-id" className="flex flex-col justify-between gap-2 my-6">
                     <h3 className="font-bold text-lg">Do you want to be a Venue Manager?</h3>
-                    <button onClick={registerAsVenueManager} type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto w-[20rem]">Click to register as a Venue Manager!</button>
+                    <button onClick={registerAsVenueManager} type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto max-w-[20rem] min-w-[10rem] xs:min-w-[7rem]">Click to register as a Venue Manager!</button>
                   </div>
                   ) : ( 
-                    <div id="register-venue-manager-id" className="my-4 flex flex-col gap-4 mx-2 text-center w-full">
+                    <div id="register-venue-manager-id" className="my-4 flex flex-col gap-4 mx-auto text-center w-full">
                       <h3 className="text-lg font-bold mx-auto">You are a Venue Manager!</h3>
                       <Link className="font-bold mx-auto" to="/hosting">
                         <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto w-[8rem]">Go to Hosting</button>
@@ -365,9 +358,6 @@ function Profile() {
             <div>No profile data was found. Please ensure you are logged in: <Link className="underline" to="/login">Log in</Link></div>
           </section>
         )}
-        <div>
-          <img src=""></img>
-        </div>
     </main>
   );
 }

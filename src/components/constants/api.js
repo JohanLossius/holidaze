@@ -21,6 +21,8 @@ export const profilesApi = `${holidazeApi}/profiles`;
 export const bookingsApi = `${holidazeApi}/bookings`;
 export const venuesApi = `${holidazeApi}/venues`;
 
+// Search
+
 export const searchQueryVenuesBase = `${venuesApi}/search?q=`;
 
 /* Full search query example:
@@ -34,30 +36,3 @@ export const searchQueryProfilesBase = `${profilesApi}/search?q=`;
 `${profilesApi}/search?q=Bardur`; 
 "Bardur" is the search query, and changed dynamically.
 */
-
-
-// Headers
-// export const optionsApiKey = {
-//   headers: {
-//     "Authorization": `Bearer ${token}`,
-//     "X-Noroff-API-Key": apiKey
-//   }
-// };
-
-// export const deleteOptions = {
-//   method: "DELETE",
-//   headers: {
-//     "Content-type": "application/json; charset=UTF-8",
-//     "Authorization": `Bearer ${token}`,
-//     "X-Noroff-API-Key": apiKey
-//   }
-// }
-
-// export const bookingsByVenueOptions = {
-//   method: "GET",
-//   headers: {
-//     "Content-type": "application/json; charset=UTF-8",
-//     "Authorization": `Bearer ${token}`,
-//     "X-Noroff-API-Key": apiKey
-//   }
-// }

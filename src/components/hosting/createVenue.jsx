@@ -22,6 +22,7 @@ const schema = yup
       .required("Please enter a description of your venue."),
     image: yup
       .string()
+      .typeError("Image must be a valid URL to a publicly accessible image.")
       .url("Must be a valid URL to a live and publicly accessible image.")
       .required("Please enter a URL to a live, publicly accessible image."),
     price: yup
@@ -37,19 +38,15 @@ const schema = yup
       .required("Please enter the max. amount of guests that you will permit at your venue at a given visit."),
     wifi: yup
       .boolean()
-      .nullable()
       .required("Please mark whether wifi is included at your venue."),
     parking: yup
       .boolean()
-      .nullable()
       .required("Please mark whether parking is included at your venue."),
     breakfast: yup
       .boolean()
-      .nullable()
       .required("Please mark whether guests will be served breakfast."),
     pets: yup
       .boolean()
-      .nullable()
       .required("Please mark whether guests can bring pets."),
     address: yup
       .string()
@@ -83,19 +80,17 @@ function CreateVenue() {
   const { createVenueState, setCreateVenueState, updateManager, venueManagerFeedback, setVenueManagerFeedback } = profileLoginUsage();
 
   const [feedback, setFeedback] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const token = getToken();
 
   const {
     register,
     handleSubmit,
+    trigger,
+    getValues,
+    reset,
     formState:
       { errors },
-      trigger,
-      getValues,
-      reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -125,8 +120,8 @@ function CreateVenue() {
     }
   };
 
+  // Handles submission of data and creates a venue if succesful, or displays error message to user
   async function onSubmitHandler(data) {
-    console.log("onSubmit data:", data);
 
     const optionsCreateVenue = {
       method: "POST",
@@ -164,18 +159,13 @@ function CreateVenue() {
       const resp = await fetch(venuesApi, optionsCreateVenue)
       const json = await resp.json();
 
-      console.log("Response venue creation: ", json);
-
       if (!resp.ok) {
         document.getElementById("create-venue-section").scrollIntoView({behavior: "smooth"});
-        setFeedback(<div className="text-red-500 font-bold">{json.errors[0].message}</div>);
-        throw new Error(json.errors[0].message);
+        setFeedback(<div className="text-red-500 font-bold">{json.errors?.[0]?.message || "An error occurred."}</div>);
+        throw new Error(json.errors?.[0]?.message);
       }
 
       if (resp.ok) {
-        // setFeedback(<div className="flex flex-col justify-center text-center mx-auto text-green-500 font-bold">
-        //               <div className="">A new venue was created</div>
-        //             </div>);
         reset();
         setCreateVenueState(false);
         setVenueManagerFeedback("A new venue was created!")
@@ -186,7 +176,6 @@ function CreateVenue() {
       }
     } catch (error) {
       console.log("Error venue creation: " + error.message);
-      // setFeedback(<div className="text-red-500 font-bold">{error.message}</div>);
     }
   };
 
@@ -199,11 +188,6 @@ function CreateVenue() {
       <section id="create-venue-section" className="text-center border-2 bg-tertiary border-secondary w-4/5 mx-auto rounded-[25px] my-2 p-2 xl:w-[90%] lg:w-[95%]">
         <h2 className="text-center mx-auto font-bold text-2xl s:text-lg xs:text-base">Create Venue</h2>
         {feedback ? <div className="text-center m-auto flex flex-col justify-center">{feedback}</div> : null }
-        {/* {feedback ? <div className="text-center m-auto flex flex-col justify-center">{feedback}</div> : (
-          <div className="flex flex-col justify-center text-center p-4">
-            <span className="text-center m-auto font-bold text-lg">Create a new venue by filling out the relevant data:</span>
-          </div>
-        )} */}
         <form className="flex flex-col m-auto justify-between text-center gap-2 mt-4 xl:w-full" onSubmit={handleSubmit(onSubmitHandler)}>
           <label htmlFor="name-id" className="font-bold">Title of venue</label>
           <textarea
@@ -274,7 +258,7 @@ function CreateVenue() {
               id="breakfast-id"
               className="text-center bg-white h-[2.5rem] w-[2.5rem] mx-auto rounded-[25px]"
             />
-            <span className="text-red-500">{errors.pets?.message}</span>
+            <span className="text-red-500">{errors.breakfast?.message}</span>
             <label htmlFor="pets-id" className="font-bold">Pets</label>
             <input
               {...register("pets")}
@@ -290,7 +274,7 @@ function CreateVenue() {
             {...register("address")}
             onBlur={() => handleBlur("address")}
             id="address-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 mx-auto rounded-[25px] xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.address?.message}</span>
           <label htmlFor="zip-id" className="font-bold">Zip</label>
@@ -298,7 +282,7 @@ function CreateVenue() {
             {...register("zip")}
             onBlur={() => handleBlur("zip")}
             id="zip-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 mx-auto rounded-[25px] xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.zip?.message}</span>
           <label htmlFor="city-id" className="font-bold">City</label>
@@ -306,7 +290,7 @@ function CreateVenue() {
             {...register("city")}
             onBlur={() => handleBlur("city")}
             id="city-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 mx-auto rounded-[25px] xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.city?.message}</span>
           <label htmlFor="country-id" className="font-bold">Country</label>
@@ -314,7 +298,7 @@ function CreateVenue() {
             {...register("country")}
             onBlur={() => handleBlur("country")}
             id="country-id"
-            className="text-center bg-white w-1/2 mx-auto rounded-[25px]"
+            className="text-center bg-white w-1/2 mx-auto rounded-[25px] xl:w-4/5 s:w-[95%]"
           />
           <span className="text-red-500">{errors.country?.message}</span>
           <button type="submit" className="bg-primary text-white font-bold p-4 rounded-[25px] w-32 mx-auto">Create venue</button>

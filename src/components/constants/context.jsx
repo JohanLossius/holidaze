@@ -19,14 +19,8 @@ export const ProfileLoginProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  // const signup = ( username, email ) => {
-  //   localStorage.setItem("username", username);
-  //   localStorage.setItem("email", email);
-  //   localStorage.setItem("loggedIn", false);
-  //   setLoggedInState(false);
-  // };
-
-  const login = ( username, token, avatarUrl ) => {
+  // Currently unused login functionality
+  const login = ( username, token ) => {
     localStorage.setItem("username", username);
     localStorage.setItem("accessToken", token);
     localStorage.setItem("loggedIn", true);
@@ -34,6 +28,7 @@ export const ProfileLoginProvider = ({ children }) => {
     navigate("/venues");
   }
 
+  // Logout functionality clears local storage and context states
   const logout = () => {
     localStorage.clear();
     setLoggedInState(false);
@@ -44,10 +39,12 @@ export const ProfileLoginProvider = ({ children }) => {
     navigate("/");
   }
 
+  // Managers re-rendering of venue manager component
   const updateManager = () => {
     setUpdateCounter(updateCounter + 1);
   }
 
+  // Dynamically handles loggedin state for proper navbar display
   useEffect(() => {
     const handleStorageChange = () => {
       setLoggedInState(!!localStorage.getItem("loggedIn"));

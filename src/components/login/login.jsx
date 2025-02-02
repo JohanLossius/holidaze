@@ -22,7 +22,6 @@ const schema = yup
   .required();
 
 function Login() {
-  // const [submittedData, setSubmittedData] = useState(null);
   const [feedback, setFeedback] = useState(null);
 
   const { loggedInState, setLoggedInState, login, logout } = profileLoginUsage();
@@ -33,11 +32,11 @@ function Login() {
   const {
     register,
     handleSubmit,
+    trigger,
+    getValues,
+    reset,
     formState:
       { errors },
-      trigger,
-      getValues,
-      reset,
     } = useForm({
       resolver: yupResolver(schema),
   });
@@ -62,10 +61,6 @@ function Login() {
   };
 
   async function onSubmitHandler(data) {
-    // console.log("onSubmit data:", data);
-    // setSubmittedData(data);
-
-    // event.preventDefault();
   
     localStorage.clear();
     setFeedback(null);
@@ -85,35 +80,29 @@ function Login() {
         "Content-type": "application/json; charset=UTF-8",
       },
     };
-
-    // console.log("RequestOptions: ", requestOptions);
         
     try {
       const resp = await fetch(loginApi, requestOptions);
       const json = await resp.json();
 
-      // console.log("Response: ", json);
-
      if (!resp.ok) {
-        setFeedback(<div className="text-red-500 font-bold">{json.errors[0]?.message}</div>);
-        throw new Error(json.errors[0].message);
+        setFeedback(<div className="text-red-500 font-bold">{json.errors[0]?.message || "An unknown error occurred."}</div>);
+        throw new Error(json.errors[0]?.message);
       }
 
       if (resp.ok) {
 
         const token = json.data.accessToken;
-        const avatarUrl = json.data.avatar.url;
+        const avatarUrl = json.data.avatar?.url;
         const username = json.data.name;
   
-        // login(username, token, avatarUrl);
-        // console.log("Current token in localStorage:", localStorage.getItem("accessToken"));
-        // console.log("New token being added:", token);   
         localStorage.setItem("username", username);
         localStorage.setItem("accessToken", token);
         localStorage.setItem("avatarUrl", avatarUrl);
         localStorage.setItem("loggedIn", true);
         setLoggedInState(true);
         
+        // Functionality when user navigates to login page from a venue, to send user back to same venue
         const redirectToVenueBooking = location.state?.redirectToVenueBooking;
 
         if(redirectToVenueBooking) {
@@ -122,14 +111,14 @@ function Login() {
 
         if (!redirectToVenueBooking) {
           navigate("/venues");
+        } else {
+          setFeedback(<div className="flex flex-col justify-center text-center mx-auto min-h-[15vh] text-green-500 font-bold s:font-semibold text-s">
+                        <p className="m-2">You were successfully logged in as:</p>
+                        <p className="underline break-all">{username}</p>
+                        <p className="m-2">Get started here: <Link to="/venues" className="underline">Venues</Link></p>
+                      </div>);
+          reset();
         }
-
-        setFeedback(<div className="flex flex-col justify-center text-center mx-auto min-h-[15vh] text-green-500 font-bold s:font-semibold text-s">
-                      <p className="m-2">You were successfully logged in as:</p>
-                      <p className="underline break-all">{username}</p>
-                      <p className="m-2">Get started here: <Link to="/venues" className="underline">Venues</Link></p>
-                    </div>);
-        reset();
       }
 
     } catch (error) {

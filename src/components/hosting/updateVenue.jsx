@@ -22,6 +22,7 @@ const schema = yup
       .required("Please enter a description of your venue."),
     image: yup
       .string()
+      .typeError("Image must be a valid URL to a publicly accessible image.")
       .url("Must be a valid URL to a live and publicly accessible image.")
       .required("Please enter a URL to a live, publicly accessible image."),
     price: yup
@@ -37,19 +38,15 @@ const schema = yup
       .required("Please enter the max. amount of guests that you will permit at your venue at a given visit."),
     wifi: yup
       .boolean()
-      .nullable()
       .required("Please mark whether wifi is included at your venue."),
     parking: yup
       .boolean()
-      .nullable()
       .required("Please mark whether parking is included at your venue."),
     breakfast: yup
       .boolean()
-      .nullable()
       .required("Please mark whether guests will be served breakfast."),
     pets: yup
       .boolean()
-      .nullable()
       .required("Please mark whether guests can bring pets."),
     address: yup
       .string()
@@ -80,22 +77,18 @@ const schema = yup
 
 function UpdateVenue() {
 
-  const { singleVenue, setSingleVenue, venueManagerFeedback, setVenueManagerFeedback, updateCounter, setUpdateCounter, updateManager } = profileLoginUsage();
-  console.log("singlevenue state: ", singleVenue);
+  const { singleVenue, setSingleVenue, venueManagerFeedback, setVenueManagerFeedback, updateManager } = profileLoginUsage();
 
-  const [newVenueState, setNewVenueState] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const {
     register,
     handleSubmit,
+    trigger,
+    getValues,
+    reset,
     formState:
       { errors },
-      trigger,
-      getValues,
-      reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {},
@@ -104,22 +97,22 @@ function UpdateVenue() {
   useEffect(() => {
     if (singleVenue) {
       reset({
-          name: singleVenue.name,
-          description: singleVenue.description,
-          image: singleVenue.media[0]?.url,
-          price: singleVenue.price,
-          maxGuests: singleVenue.maxGuests,
-          wifi: singleVenue.meta?.wifi || false,
-          parking: singleVenue.meta?.parking || false,
-          breakfast: singleVenue.meta?.breakfast || false,
-          pets: singleVenue.meta?.pets || false,
-          address: singleVenue.location?.address,
-          zip: singleVenue.location?.zip,
-          city: singleVenue.location?.city,
-          country: singleVenue.location?.country,
-        })
-      }
-  }, [singleVenue, reset])
+        name: singleVenue.name,
+        description: singleVenue.description,
+        image: singleVenue.media[0]?.url,
+        price: singleVenue.price,
+        maxGuests: singleVenue.maxGuests,
+        wifi: singleVenue.meta?.wifi || false,
+        parking: singleVenue.meta?.parking || false,
+        breakfast: singleVenue.meta?.breakfast || false,
+        pets: singleVenue.meta?.pets || false,
+        address: singleVenue.location?.address,
+        zip: singleVenue.location?.zip,
+        city: singleVenue.location?.city,
+        country: singleVenue.location?.country,
+      });
+    }
+  }, [singleVenue])
 
   // Handle console logging, validation with yup and react form hook
   const handleBlur = async (field) => {
@@ -140,8 +133,8 @@ function UpdateVenue() {
     }
   };
 
+  // Handles the inputed data and updates API response accordingly
   async function onSubmitHandler(data) {
-    // console.log("onSubmit data:", data);
 
     const token = getToken();
 
@@ -183,19 +176,24 @@ function UpdateVenue() {
       const resp = await fetch(updateVenueApi, optionsUpdateVenue)
       const json = await resp.json();
 
-      // console.log("Response venue update: ", json);
-
       if (!resp.ok) {
+        // Scrolls to top of form to ensure user gets error message in the viewport
         document.getElementById("update-venue-section").scrollIntoView({behavior: "smooth"});
-        setFeedback(<div className="text-red-500 font-bold">{json.errors[0].message}</div>);
-        throw new Error(json.errors[0].message);
+        setFeedback(<div className="text-red-500 font-bold">{json.errors?.[0]?.message || "An unknown error occurred."}</div>);
+        throw new Error(json.errors?.[0]?.message);
       }
 
       if (resp.ok) {
         const venueName = json.data.name;
+
+        // Set singleVenue state to null when successfully updated, so that the update form is minimized
         setSingleVenue(null);
         setVenueManagerFeedback(`${venueName} was updated successfully!`);
+
+        // Ensure venue manager component is updated correctly upon venue update
         updateManager();
+
+        // Smoother scrolling
         setTimeout(() => {
           window.scrollTo({top: 0, behavior: "smooth"});
         }, 150)
@@ -203,7 +201,7 @@ function UpdateVenue() {
     } catch (error) {
       console.log("Error venue update: " + error.message);
     }
-  };
+  }
 
   if (!singleVenue) {
     return <section id="update-venue-section"></section>
@@ -214,11 +212,6 @@ function UpdateVenue() {
       <section id="update-venue-section" className="text-center border-2 bg-tertiary border-secondary w-4/5 mx-auto rounded-[25px] my-2 p-2 xl:w-[90%] lg:w-[95%]">
         <h2 className="text-center mx-auto font-bold text-2xl s:text-lg xs:text-base">Update {singleVenue.name}</h2>
         {feedback ? <div className="text-center m-auto flex flex-col justify-center">{feedback}</div> : null }
-        {/* {feedback ? <div className="text-center m-auto flex flex-col justify-center">{feedback}</div> : (
-          <div className="flex flex-col justify-center text-center p-4">
-            <span className="text-center m-auto font-bold text-lg">Create a new venue by filling out the relevant data:</span>
-          </div>
-        )} */}
         <form className="flex flex-col m-auto justify-between text-center gap-2 mt-4 xl:w-full" onSubmit={handleSubmit(onSubmitHandler)}>
           <label htmlFor="name-id" className="font-bold">Title of venue</label>
           <textarea
@@ -289,7 +282,7 @@ function UpdateVenue() {
               id="breakfast-id"
               className="text-center bg-white h-[2.5rem] w-[2.5rem] mx-auto rounded-[25px]"
             />
-            <span className="text-red-500">{errors.pets?.message}</span>
+            <span className="text-red-500">{errors.breakfast?.message}</span>
             <label htmlFor="pets-id" className="font-bold">Pets</label>
             <input
               {...register("pets")}

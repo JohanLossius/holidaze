@@ -1,3 +1,5 @@
+import React from "react";
+
 function Footer() {
     return (
         <footer className="flex flex-row justify-between mx-auto items-center w-full mb-2 lg:flex-col gap-2">
