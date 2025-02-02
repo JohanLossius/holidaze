@@ -42,7 +42,7 @@ function ViewBookingsByVenue() {
             <div className="flex flex-col mx-auto text-center w-4/5 s:w-[95%]">
               <img className="max-w-[15rem] h-auto w-auto rounded-[25px] max-h-[15rem] mx-auto rounded mt-2 s:max-w-[10rem] max-h-[10rem] xs:max-w-[7rem] max-h-[7rem]" src={booking.customer.avatar?.url} alt="Profile picture" loading="lazy"></img>
               <p className="font-semibold">{booking.customer.name}</p>
-              <a href={`mailto:${booking.customer.email}`}className="truncate underline font-semibold">{booking.customer.email}</a>
+              <a href={`mailto:${booking.customer.email}`} title={`Send email to ${booking.customer.name}`} className="truncate underline font-semibold">{booking.customer.email}</a>
               <p>{booking.customer.bio?.slice(0, 50)}</p>
             </div>
           </article>

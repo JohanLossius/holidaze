@@ -117,7 +117,7 @@ function Home() {
                   <img 
                     src={venue.media[0]?.url}
                     className="max-w-[20rem] h-auto w-auto rounded-lg max-h-[20rem] mx-auto rounded s:max-w-[12rem] xs:max-w-[5rem]"
-                    alt={venue.media[0]?.alt}
+                    alt="Venue image"
                     loading="lazy"
                   >
                   </img>

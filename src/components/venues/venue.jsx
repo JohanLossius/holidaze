@@ -123,10 +123,10 @@ function Venue() {
           <div className="w-1/2 md:w-4/5 mx-auto s:w-[100%]">
             {venue.media?.length >= 1 ? (
               venue.media.map((image, index) => (
-                <img src={image.url} key={`${image.url}-${index}`} className="max-w-[30rem] h-auto w-auto rounded-lg max-h-[30rem] mx-auto rounded my-2 xl:w-[95%]" alt={image.alt}></img>
+                <img src={image.url} key={`${image.url}-${index}`} className="max-w-[30rem] h-auto w-auto rounded-lg max-h-[30rem] mx-auto rounded my-2 xl:w-[95%]" alt="Venue image"></img>
               ))
             ) : (
-              <img src={venue.media[0]?.url} className="max-w-[30rem] h-auto w-auto rounded-lg max-h-[30rem] mx-auto rounded" alt={venue.media[0]?.alt}></img>
+              <img src={venue.media[0]?.url} className="max-w-[30rem] h-auto w-auto rounded-lg max-h-[30rem] mx-auto rounded" alt="Venue image"></img>
             )}
           </div>
           <div className="w-1/2 md:w-4/5 mx-auto s:w-[95%] s:w-[100%]">
@@ -146,7 +146,7 @@ function Venue() {
 
               {loggedInState === false ? (
               <form className="w-3/5 gap-4 flex flex-col mx-auto text-center justify-between bg-white text-black border-2 p-2 justify-between rounded-[25px] lg:w-4/5 md:w-[95%] p-2 s:w-full">
-                <img src="/calendar-icon.svg" className="mx-auto"></img>
+                <img src="/calendar-icon.svg" className="mx-auto" alt="Calendar icon"></img>
                 <h3 className="text-2xl font-bold mx-auto">Book your stay today</h3>
                 <span className="text-red-500">{errors.guests?.message}</span>
                 <label htmlFor="guests-id" className="font-bold">Nr. of visitors:</label>
@@ -174,7 +174,7 @@ function Venue() {
               </form>
               ) : (
                 <form onSubmit={handleSubmit(onSubmitHandler)} className="w-3/5 gap-4 flex flex-col mx-auto text-center text-black bg-white border-2 p-4 justify-between rounded-[25px] lg:w-4/5 md:w-[95%] p-2 s:w-full">
-                  <img src="/calendar-icon.svg" className="mx-auto"></img>
+                  <img src="/calendar-icon.svg" className="mx-auto" alt="Calendar icon"></img>
                   <h3 className="text-2xl font-bold mx-auto">Book your stay today!</h3>
                   {feedback ? <p className="mx-auto">{feedback}</p> : null }
                   <span className="text-red-500">{errors.guests?.message}</span>

@@ -335,44 +335,41 @@ function VenueManagerProfile() {
 
   return (
     <section id="venue-manager-section" className="h-auto text-center flex flex-col items-center mt-4 border-2 bg-tertiary border-secondary w-4/5 mx-auto rounded-[25px] xl:w-[90%] lg:w-[95%]">
-        { profileWithVenues ? (
-          <section className="flex flex-col mx-auto justify-center justify-between my-4 mx-auto gap-4 w-4/5 xl:w-[95%] lg:w-[98%]">
-            <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" title="Profile picture" src={profileWithVenues.avatar.url || "/blank-profile-picture.png"} alt="Profile picture"></img>
-            <h2 className="mx-auto font-bold text-2xl">Venue Manager</h2>
-            <h3 className="text-xl font-bold mx-auto">{profileWithVenues.name}</h3>
-            <a href={`mailto:${profileWithVenues.email}`} className="text-lg underline truncate mx-2">{profileWithVenues.email}</a>
-            <div>
-              <section className="flex flex-col justify-between mx-auto w-full s:w-4/5 xs:w-[98%]">
-                <h2 className="font-bold text-lg">Your venues</h2>
-                {venueManagerFeedback ? <div className="feedback-cont mx-auto text-center font-bold text-green-500 text-lg">{venueManagerFeedback}</div> : null }
-                {profileWithVenues.venues.length >= 1 ? (
-                  profileWithVenues.venues.map((venue) => (
-                    <article key={venue.id} className="flex flex-row gap-2 justify-between items-center w-full mx-auto my-4 p-4 bg-white rounded-[25px] s:flex-col p-2 xs:py-[2px] px-0">
-                      <Link to={`/venue/${venue.id}`} className="text-lg font-bold w-1/3 s:w-4/5">
-                        <button className="underline">{venue.name}</button>
-                      </Link>
-                      <span className="w-1/3 s:w-4/5 xs:w-full">{venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span>
-                      <div className="flex flex-row gap-2 items-center w-1/3 lg:flex-col s:w-4/5 pb-2">
-                        <button onClick={() => showBookings(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto xl:font-semibold text-s lg:w-[8rem]">Bookings</button>
-                        <button onClick={() => handleUpdate(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto xl:font-semibold text-s lg:w-[8rem]">Update</button>
-                        <button onClick={() => handleDelete(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto xl:font-semibold text-s lg:w-[8rem]">Delete</button>
-                      </div>
-                    </article>
-                  ))) : (
-                    <span>You have no venues currently.</span>
-                  )}
-              </section>
-            </div>
-            <button onClick={() => handleCreateButton(true)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[10rem] w-[10rem] h-auto max-h-[5rem] mx-auto xs:max-w-[7rem]">Create new +</button>
-          </section>
-        ) : (
-          <section className="flex flex-wrap justify-center justify-between m-4 gap-4"> 
-            <div>No profile data was found. Please ensure you are logged in: <Link className="underline" to="/login">Log in</Link></div>
-          </section>
-        )}
-        <div>
-          <img src=""></img>
-        </div>
+      { profileWithVenues ? (
+        <section className="flex flex-col mx-auto justify-center justify-between my-4 mx-auto gap-4 w-4/5 xl:w-[95%] lg:w-[98%]">
+          <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" title="Profile picture" src={profileWithVenues.avatar.url || "/blank-profile-picture.png"} alt="Profile picture"></img>
+          <h2 className="mx-auto font-bold text-2xl">Venue Manager</h2>
+          <h3 className="text-xl font-bold mx-auto">{profileWithVenues.name}</h3>
+          <a href={`mailto:${profileWithVenues.email}`} className="text-lg underline truncate mx-2" title={`Send email to ${profileWithVenues.name}` || "Send email to user"}>{profileWithVenues.email}</a>
+          <div>
+            <section className="flex flex-col justify-between mx-auto w-full s:w-4/5 xs:w-[98%]">
+              <h2 className="font-bold text-lg">Your venues</h2>
+              {venueManagerFeedback ? <div className="feedback-cont mx-auto text-center font-bold text-green-500 text-lg">{venueManagerFeedback}</div> : null }
+              {profileWithVenues.venues.length >= 1 ? (
+                profileWithVenues.venues.map((venue) => (
+                  <article key={venue.id} className="flex flex-row gap-2 justify-between items-center w-full mx-auto my-4 p-4 bg-white rounded-[25px] s:flex-col p-2 xs:py-[2px] px-0">
+                    <Link to={`/venue/${venue.id}`} className="text-lg font-bold w-1/3 s:w-4/5">
+                      <button className="underline">{venue.name}</button>
+                    </Link>
+                    <span className="w-1/3 s:w-4/5 xs:w-full">{venue.location.address}, {venue.location.zip} {venue.location.city}, {venue.location.country}</span>
+                    <div className="flex flex-row gap-2 items-center w-1/3 lg:flex-col s:w-4/5 pb-2">
+                      <button onClick={() => showBookings(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto xl:font-semibold text-s lg:w-[8rem]">Bookings</button>
+                      <button onClick={() => handleUpdate(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto xl:font-semibold text-s lg:w-[8rem]">Update</button>
+                      <button onClick={() => handleDelete(venue)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[6rem] mx-auto xl:font-semibold text-s lg:w-[8rem]">Delete</button>
+                    </div>
+                  </article>
+                ))) : (
+                  <span>You have no venues currently.</span>
+                )}
+            </section>
+          </div>
+          <button onClick={() => handleCreateButton(true)} className="rounded-lg bg-primary text-white p-2 font-bold max-w-[10rem] w-[10rem] h-auto max-h-[5rem] mx-auto xs:max-w-[7rem]">Create new +</button>
+        </section>
+      ) : (
+        <section className="flex flex-wrap justify-center justify-between m-4 gap-4"> 
+          <div>No profile data was found. Please ensure you are logged in: <Link className="underline" to="/login">Log in</Link></div>
+        </section>
+      )}
     </section>
   );
 }

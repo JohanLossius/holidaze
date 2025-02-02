@@ -298,7 +298,7 @@ function Profile() {
           <section className="flex flex-col mx-auto justify-center justify-between m-4 gap-4 w-4/5 md:w-[95%]">
             <img className="max-h-[8rem] max-w-[8rem] mx-auto h-auto w-auto" src={avatarUrlState || "/blank-profile-picture.png"} alt="Profile picture"></img>
             <h2 className="text-2xl font-bold mx-auto break-all">{profile.name}</h2>
-            <a href={`mailto:${profile.email}`} className="text-lg underline truncate mx-2">{profile.email}</a>
+            <a href={`mailto:${profile.email}`} className="text-lg underline truncate mx-2" title={`Send email to ${profile.name}` || "Send email to user"}>{profile.email}</a>
             <div>
               <p className="underline">Bio:</p>
               <span className=""> {bioState}</span>
