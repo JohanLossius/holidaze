@@ -1,5 +1,5 @@
 # Project Exam 2
-Johan Lossius Project Exam 2 for Frontend & UX Noroff.
+**Johan Lossius Project Exam 2 for Frontend & UX Noroff**
 
 ![Holidaze - Experiences to amaze!](/public/image-2.png)
 
