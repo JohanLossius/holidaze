@@ -13,15 +13,21 @@ Hugely appreciated!
 clone https://github.com/JohanLossius/holidaze.git
 If you are using GitHub Desktop and Visual Studio Code editor, simply launch and install it via GitHub Desktop by pulling it from the GitHub repo and follow the instructions of the program until you're setup in Visual Studio Code.
 
-OR
+**OR**
 
-- You can also pull it directly into VS code from GitHub by adding:
+- You can also pull it directly into VS code from GitHub.
+
+**Add:**
 ```
 git remote add origin https://github.com/JohanLossius/holidaze.git
+```
+
+**Then run:**
+```
 git pull origin main
 ```
 
-- And then install it. Run:
+**Then install:**
 ```
 npm i
 ```
