@@ -9,13 +9,13 @@ It has been a great experience for me, even though it has been digital and with 
 Hugely appreciated!
 
 ## Getting started with the development:
-- Clone the repo from GitHub via GitHub Desktop:
+Clone the repo from GitHub via GitHub Desktop:
 clone https://github.com/JohanLossius/holidaze.git
 If you are using GitHub Desktop and Visual Studio Code editor, simply launch and install it via GitHub Desktop by pulling it from the GitHub repo and follow the instructions of the program until you're setup in Visual Studio Code.
 
 **OR**
 
-- You can also pull it directly into VS code from GitHub.
+You can also pull it directly into VS code from GitHub.
 
 **Add:**
 ```
