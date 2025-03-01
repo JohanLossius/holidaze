@@ -54,11 +54,11 @@ function Venue() {
     if (result) {
       // Get the current values of the form fields
       const values = getValues();
-      if (
-        !errors.guests && values.guests
-      ) {
-        console.log("Validation succeeded, data:", values);
-      }
+      // if (
+      //   !errors.guests && values.guests
+      // ) {
+      //   console.log("Validation succeeded, data:", values);
+      // }
     }
   };
 
@@ -86,7 +86,10 @@ function Venue() {
       const json = await resp.json();
 
       if (!resp.ok) {
-        setFeedback(<div className="text-red-500 font-bold">{json.errors[0]?.message || "An error occurred."}</div>);
+         // Avoid setting state if error message is the same to prevent unnecessary re-renders
+        if (feedback !== json.errors[0]?.message) {
+          setFeedback(<div className="text-red-500 font-bold">{json.errors[0]?.message || "An error occurred."}</div>);
+        }
         throw new Error(json.errors[0]?.message);
       }
 

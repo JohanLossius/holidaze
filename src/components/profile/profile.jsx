@@ -68,16 +68,15 @@ function Profile() {
   const handleBlurAvatar = async (field) => {
     // Trigger validation for the specified field when it loses focus
     const result = await triggerAvatar(field);
-    // console.log("result avatar: ", result);
     if (result) {
       // Get the current values of the form fields
       const values = getValuesAvatar();
-      if (
-        !avatarErrors.avatar && values.avatar
-        // !errors.avatar && !errors.bio && !errors.venueManager && values.avatar && values.bio && values.venueManager
-      ) {
-        console.log("Avatar validation succeeded, data:", values);
-      }
+      // if (
+      //   !avatarErrors.avatar && values.avatar
+      //   // !errors.avatar && !errors.bio && !errors.venueManager && values.avatar && values.bio && values.venueManager
+      // ) {
+      //   console.log("Avatar validation succeeded, data:", values);
+      // }
     }
   };
 
@@ -85,7 +84,6 @@ function Profile() {
   const handleBlurBio = async (field) => {
     // Trigger validation for the specified field when it loses focus
     const result = await triggerBio(field);
-    // console.log("result bio: ", result);
     if (result) {
       // Get the current values of the form fields
       const values = getValuesBio();

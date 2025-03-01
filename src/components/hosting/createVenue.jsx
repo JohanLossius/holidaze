@@ -111,12 +111,12 @@ function CreateVenue() {
       // Get the current values of the form fields
       const values = getValues();
       
-      if (
-        !errors.name && !errors.description && !errors.image && !errors.price && !errors.maxGuests && !errors.wifi && !errors.parking && !errors.breakfast && !errors.pets && !errors.address && !errors.city && !errors.zip && !errors.country 
-        && values.name && values.description && values.image && values.price && values.maxGuests && values.wifi && values.parking && values.breakfast && values.pets && values.address && values.city && values.zip && values.country 
-      ) {
-        console.log("Validation succeeded, data:", values);
-      }
+      // if (
+      //   !errors.name && !errors.description && !errors.image && !errors.price && !errors.maxGuests && !errors.wifi && !errors.parking && !errors.breakfast && !errors.pets && !errors.address && !errors.city && !errors.zip && !errors.country 
+      //   && values.name && values.description && values.image && values.price && values.maxGuests && values.wifi && values.parking && values.breakfast && values.pets && values.address && values.city && values.zip && values.country 
+      // ) {
+      //   console.log("Validation succeeded, data:", values);
+      // }
     }
   };
 

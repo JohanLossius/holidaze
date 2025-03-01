@@ -125,7 +125,6 @@ function VenueManagerProfile() {
    */
 
   const showBookings = (venue) => {
-    console.log(venue);
 
     /**
      * @async
@@ -168,7 +167,6 @@ function VenueManagerProfile() {
         const bookingsByVenueApi = `${venuesApi}/${venueId}?_bookings=true`;
         const response = await fetch(bookingsByVenueApi, bookingsByVenueOptions);
         const json = await response.json();
-        console.log(json);
         if (!response.ok) {
 
           // context error is connected with viewBookingsByVenue.jsx component, for dynamic error messaging there

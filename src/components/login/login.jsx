@@ -51,12 +51,12 @@ function Login() {
       // Get the current values of the form fields
       const values = getValues();
       
-      if (
-        !errors.email && !errors.password &&
-        values.email && values.password
-      ) {
-        console.log("Validation succeeded, data:", values);
-      }
+      // if (
+      //   !errors.email && !errors.password &&
+      //   values.email && values.password
+      // ) {
+      //   console.log("Validation succeeded, data:", values);
+      // }
     }
   };
 

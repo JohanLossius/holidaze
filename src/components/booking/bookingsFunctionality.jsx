@@ -82,14 +82,12 @@ function BookingsFunctionality() {
     async function deleteBookingFunction() {
       try {
         const responseDelete = await fetch(deleteBookingApi, optionsDeleteBooking);
-        // console.log("jsonDelete: ", responseDelete);
 
         if (!responseDelete.ok) {
           setBookingFeedback(<div className="text-green-500 font-bold">An error occured while trying to delete the booking.</div>);
           throw new Error("An error occured while trying to delete the booking.");
         }
         if (responseDelete.ok) {
-          // setBookingFeedback(<div className="text-red-500 font-bold">Your reservation at <span className="underline">{venueNameBooking}</span> was successfully deleted!</div>);
           setBookingFeedback(
           <div className="text-red-500 font-bold mx-auto">
             <p className="mx-2">Your reservation was successfully deleted at:</p>
