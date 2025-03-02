@@ -1,7 +1,7 @@
 # Project Exam 2
 **Johan Lossius Project Exam 2 for Frontend & UX Noroff**
 
-![Holidaze - Experiences to amaze!](/public/image-2.png)
+![Holidaze - Experiences to amaze!](/public/holidaze-screenshot.jpg)
 
 ## Shout out to Noroff
 Before going into the details of how to get started, I'd like to thank Noroff for helping me throughout these 4 years with the studies.
